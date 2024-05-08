@@ -18,9 +18,9 @@ export default function SingleAlbum() {
   const [modalImage, setModalImage] = useState();
   const [modalImageIndex, setModalImageIndex] = useState();
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const paths = checkCollandAlbum();
