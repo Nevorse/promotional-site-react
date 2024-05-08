@@ -1,6 +1,6 @@
 import { useState } from "react";
-import bgImage_1 from "../../../assets/images/background-image-1.jpg";
-import bgImage_2 from "../../../assets/images/background-image-2.jpg";
+import bgImage_1 from "../../../assets/images/background-image-1.webp";
+import bgImage_2 from "../../../assets/images/background-image-2.webp";
 import { useEffect } from "react";
 
 export default function HomeSlider() {
