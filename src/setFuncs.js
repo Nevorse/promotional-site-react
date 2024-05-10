@@ -7,8 +7,8 @@ import {
   setAllServicesDataHandler,
 } from "./store/collections";
 
-export const setAllData = async (coll) => {
-  const allData = await getAllData(coll);
+export const setAllData = async (coll, limit) => {
+  const allData = await getAllData(coll, limit);
   if (coll == "project_albums") {
     store.dispatch(setAllProjectsDataHandler(allData));
   }

@@ -64,7 +64,7 @@ export const login = async (email, password) => {
     return user;
   } catch (error) {
     toast.error(error.message, {
-      duration: 1000
+      duration: 1000,
     });
   }
 };
@@ -111,9 +111,11 @@ export const addDefaultData = async (coll) => {
   }
 };
 /* -----------Database----------- */
-export const getAllData = async (coll) => {
+export const getAllData = async (coll, lim) => {
   if (coll[0]) {
-    const q = query(collection(db, coll), orderBy("album", "desc"));
+    const params = [collection(db, coll), orderBy("album", "desc")];
+    if (limit) params.push(limit(lim));
+    const q = query(...params);
     try {
       const querySnapshot = await getDocs(q);
       let allData = [];
@@ -166,7 +168,7 @@ export const addData = async (coll, data, title, content) => {
   const lastData = await getLastData(coll);
   const count = lastData?.album || 0;
   const q = collection(db, coll);
-  
+
   const doc = {
     album: count + 1,
     data: data,
