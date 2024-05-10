@@ -27,8 +27,8 @@ export default function Index() {
           <nav className="flex mt-5 w-[90vw] justify-end">
             <button
               onClick={() => logout()}
-              className="bg-red-400 text-white border border-red-500 rounded-lg px-4 py-1 text-[15px]">
-              Çıkış Yap
+              className="bg-red-500 text-white border border-red-500 rounded-lg px-4 py-1.5 text-[15px] leading-5">
+              Çıkış yap
             </button>
           </nav>
           <Outlet />
@@ -36,7 +36,7 @@ export default function Index() {
       ) : (
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-1 mt-10 w-[300px] items-center">
+          className="flex flex-col gap-y-1 mt-20 w-[300px] items-center">
           <input
             type="text"
             value={eMail}

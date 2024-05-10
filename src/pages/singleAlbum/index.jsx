@@ -80,9 +80,9 @@ export default function SingleAlbum() {
       <motion.div
         initial={{ opacity: 0, translateY: 30 }}
         animate={{ opacity: 1, translateY: 0 }}
-        className="max-w-[85%] min-h-[90vh] mx-auto my-12">
+        className="max-w-[90%] min-h-[90vh] mx-auto lg:my-8 my-6">
         <div className="flex flex-col xl:flex-row gap-y-8 gap-x-6">
-          <div className="flex flex-col gap-4 w-full xl:w-[80%]">
+          <div className="flex flex-col gap-4 xl:w-[80%]">
             <div className="text-[28px] font-semibold tracking-wider">
               <h1>{document?.title}</h1>
             </div>
@@ -92,7 +92,7 @@ export default function SingleAlbum() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 style={{ backgroundImage: `url(${document?.data[0]})` }}
-                className="w-full max-h-[750px] min-h-[500px] bg-no-repeat bg-cover bg-center rounded-2xl transition-all shadow-md cursor-pointer">
+                className="2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh] w-full bg-no-repeat bg-cover bg-center rounded-2xl transition-all shadow-md cursor-pointer">
                 <img
                   src={document?.data[0]}
                   className="w-full object-cover invisible"
@@ -145,7 +145,10 @@ export default function SingleAlbum() {
                   key={index}
                   onClick={() => openModalHandler(e, index)}
                   className="cursor-pointer max-w-[500px] max-h-[350px] hover:scale-105 transition-transform">
-                  <img src={e} className="w-full h-full object-cover object-center rounded-md shadow-lg hover:shadow-2xl transition-shadow" />
+                  <img
+                    src={e}
+                    className="w-full h-full object-cover object-center rounded-md shadow-lg hover:shadow-2xl transition-shadow"
+                  />
                 </div>
               );
             })}

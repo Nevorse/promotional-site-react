@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useBeforeUnload, useLocation } from "react-router-dom";
 import { setAllData } from "../../../setFuncs";
 import _ImageComp from "./_ImageComp";
 import _FileInput from "./_FileInput";
 import { deleteSingleData, storage, updateData } from "../../../firebase";
 import toast from "react-hot-toast";
 import { deleteObject, ref } from "firebase/storage";
+import useCheckUnsavedDataAndRedirect from "../../../hooks/useCheckUnsavedDataAndRedirect";
 
 export default function AlbumComp() {
   const [docId, setDocId] = useState();
@@ -19,6 +20,9 @@ export default function AlbumComp() {
   const location = useLocation();
   const { projects, services } = useSelector((state) => state.collections);
   let dataIsSet = false;
+
+  useBeforeUnload(uploadedImages.length > 0 ? (e) => e.preventDefault() : null);
+  const checkFunction = useCheckUnsavedDataAndRedirect(uploadedImages.length);
 
   useEffect(() => {
     const id = location.pathname.split("/")[3];
@@ -129,7 +133,7 @@ export default function AlbumComp() {
               }
             }
             setUploadedImages([]);
-            toast.success("Albüm Kaydedildi");
+            toast.success("Albüm Kaydedildi.");
           })
           .catch((err) => toast.error(err.message));
       })
@@ -138,7 +142,12 @@ export default function AlbumComp() {
   /*--------------------------*/
 
   return (
-    <div className="flex flex-col items-center gap-5 w-[90%]">
+    <div className="flex flex-col items-center gap-5 w-[95vw] relative">
+      <button
+        onClick={checkFunction}
+        className="absolute left-[5vw] top-[-34px] bg-indigo-500 text-white border border-indigo-500 rounded-lg px-4 py-1.5 text-[15px] leading-5">
+        Geri git
+      </button>
       <div className="flex flex-col max-w-[500px] w-full gap-5">
         <div>
           <label htmlFor="title" className="font-semibold text-gray-700 ml-2">

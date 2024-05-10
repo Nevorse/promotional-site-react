@@ -42,7 +42,7 @@ export default function _FileInput({ setUploadedImages }) {
           let obj = {};
           obj[`${downloadURL}`] = uploadTask.snapshot.ref;
           setUploadedImages((prev) => [...prev, obj]);
-          toast.success("Upload successfull.");
+          toast.success("Yükleme Tamamlandı.");
           setImageFiles([]);
           inputRef.current.value = null;
           setProgress(0);

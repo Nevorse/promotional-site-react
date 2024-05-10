@@ -7,12 +7,17 @@ import { addData } from "../../../firebase";
 import { ConfigProvider, Switch } from "antd";
 import classNames from "classnames";
 import { setAllData } from "../../../setFuncs";
+import { useBeforeUnload } from "react-router-dom";
+import useCheckUnsavedDataAndRedirect from "../../../hooks/useCheckUnsavedDataAndRedirect";
 
 export default function Upload_() {
   const [albumTitle, setAlbumTitle] = useState("");
   const [albumContent, setAlbumContent] = useState("");
   const [serviceType, setServiceType] = useState(false);
   const [uploadedImages, setUploadedImages] = useState([]);
+
+  useBeforeUnload(uploadedImages.length > 0 ? (e) => e.preventDefault() : null);
+  const checkFunction = useCheckUnsavedDataAndRedirect(uploadedImages.length);
 
   const coverHandler = (item) => {
     const index = uploadedImages.indexOf(item);
@@ -39,20 +44,31 @@ export default function Upload_() {
       const img = Object.keys(element)[0];
       data.push(img);
     });
-    const response = await addData(collection, data, albumTitle, albumContent);
-    const id = response.id;
-    if (id) {
-      toast.success("Albüm Kaydedildi");
-      setAllData(collection);
-      /*---Clear all---*/
-      setUploadedImages([]);
-      setAlbumTitle("");
-      setAlbumContent("");
-    } else toast.error("Hata");
+    if (albumTitle.trim() && !data.length == 0) {
+      const response = await addData(collection, data, albumTitle, albumContent);
+      const id = response.id;
+      if (id) {
+        toast.success("Albüm Kaydedildi.");
+        setAllData(collection);
+        /*---Clear all---*/
+        setUploadedImages([]);
+        setAlbumTitle("");
+        setAlbumContent("");
+      } else toast.error("Hata");
+    } else if (data.length == 0) {
+      return toast.error("Fotoğraf Yükleyiniz.");
+    } else if (!albumTitle.trim()) {
+      toast.error("Başlık Giriniz.");
+    }
   };
 
   return (
-    <div className="flex flex-col items-center gap-16 w-[100vw]">
+    <div className="flex flex-col items-center gap-16 w-[100vw] relative">
+      <button
+        onClick={checkFunction}
+        className="absolute left-[5vw] top-[-34px] bg-indigo-500 text-white border border-indigo-500 rounded-lg px-4 py-1.5 text-[15px] leading-5">
+        Geri git
+      </button>
       <ConfigProvider
         theme={{
           components: {

@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   projects: [],
   services: [],
+  coverImages: [],
 };
 
 const collections = createSlice({
@@ -15,9 +16,12 @@ const collections = createSlice({
     setAllServicesDataHandler: (state, action) => {
       state.services = action.payload;
     },
+    setAllCoverImagesDataHandler: (state, action) => {
+      state.coverImages = action.payload;
+    },
   },
 });
 
-export const { setAllProjectsDataHandler, setAllServicesDataHandler } =
+export const { setAllProjectsDataHandler, setAllServicesDataHandler, setAllCoverImagesDataHandler } =
   collections.actions;
 export default collections.reducer;

@@ -4,15 +4,15 @@ import * as Yup from "yup";
 
 export const contactFromSchema = Yup.object().shape({
   message: Yup.string()
-    .required("Lütfen mesajınızı yazınız.")
-    .min(10, "Mesajınızı biraz daha açıklayın, örn. bulunduğunuz il, ilçe"),
+    .required("Mesajınızı yazınız.")
+    .min(15, "Daha uzun bir mesaj yazın."),
   name: Yup.string()
-    .required("İsminizi giriniz")
+    .required("İsminizi giriniz.")
     .min(3, "İsminizi giriniz.")
     .typeError("İsminizi giriniz"),
   phoneNum: Yup.string()
-    .min(10, "Geçerli bir numara giriniz")
-    .typeError("Geçerli bir numara giriniz")
+    .min(10, "Geçerli bir numara giriniz.")
+    .typeError("Geçerli bir numara giriniz.")
     .when("$mail", {
       is: (val) => {
         // console.log(1, Boolean(val));
@@ -22,8 +22,8 @@ export const contactFromSchema = Yup.object().shape({
       otherwise: (s) => s.required("Lütfen en az bir iletişim adresi giriniz."),
     }),
   mail: Yup.string()
-    .email("Geçerli bir mail adresi giriniz")
-    .typeError("Geçerli bir mail adresi giriniz")
+    .email("Geçerli bir mail adresi giriniz.")
+    .typeError("Geçerli bir mail adresi giriniz.")
     .when("$phoneNum", {
       is: (val) => {
         // console.log(2, Boolean(val));

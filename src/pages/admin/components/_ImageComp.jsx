@@ -18,8 +18,8 @@ export default function _ImageComp({ url, deleteHandle, coverHandle, coverImage 
           <button
             onClick={coverHandle}
             disabled={url === coverImage}
-            className=" bg-emerald-400 hover:bg-emerald-400/80 disabled:bg-emerald-500 px-3 py-1 rounded-lg text-[15px] mt-2 hidden group-hover:block transition-all">
-            {url === coverImage ? "Kapak fotoğrafı" : "Kapak Fotoğrafı ayarla"}
+            className=" bg-emerald-400 hover:bg-emerald-400/80 disabled:bg-emerald-500 disabled:cursor-not-allowed px-3 py-1 rounded-lg text-[15px] mt-2 hidden group-hover:block transition-all">
+            Fotoğrafı başa al
           </button>
         )}
 

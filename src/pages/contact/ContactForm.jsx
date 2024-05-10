@@ -20,8 +20,9 @@ export default function ContactForm() {
       setTimeout(() => {
         setError([err, error[1] + 1]);
       }, 50);
-    } else if (!values.mail && !values.phoneNum) {
-      setError(["Lütfen mesajınızı yazınız.", error[1] + 1]);
+    } 
+    else if (!values.mail && !values.phoneNum) {
+      setError(["Mesajınızı yazınız.", error[1] + 1]);
     }
   };
 
@@ -49,12 +50,12 @@ export default function ContactForm() {
           formikRef.current.resetForm();
         },
         (error) => {
-          toast.error("Bir hata oluştu. :1");
+          toast.error("Bir hata oluştu.");
           setProcess(false);
         }
       )
       .catch(() => {
-        toast.error("Bir hata oluştu. :2");
+        toast.error("Sunucu hatası.");
         setProcess(false);
       });
   };

@@ -63,7 +63,9 @@ export const login = async (email, password) => {
     const { user } = await signInWithEmailAndPassword(auth, email, password);
     return user;
   } catch (error) {
-    toast.error(error.message);
+    toast.error(error.message, {
+      duration: 1000
+    });
   }
 };
 export const logout = async () => {
@@ -129,6 +131,7 @@ export const getAllData = async (coll) => {
 export const updateAllDataAlignment = async (coll, data) => {
   const dataArr = [...data];
   const revArr = dataArr.reverse();
+  console.log(revArr);
 
   for (let i = 0; i < revArr.length; i++) {
     const docRef = doc(db, coll, revArr[i].id);
@@ -152,7 +155,7 @@ export const getSingleData = async (coll, id) => {
       docData["id"] = docSnap.id;
       return docData;
     } else {
-      toast.error("No such document!");
+      toast.error("Döküman bulunamadı!");
     }
   } catch (err) {
     toast.error(err.message);
@@ -160,24 +163,15 @@ export const getSingleData = async (coll, id) => {
 };
 /***/
 export const addData = async (coll, data, title, content) => {
-  if (data.length == 0) {
-    return toast.error("Fotoğraf Yükleyiniz");
-  }
-  if (!title) {
-    return toast.error("Başlık Giriniz");
-  }
   const lastData = await getLastData(coll);
   const count = lastData?.album || 0;
   const q = collection(db, coll);
-  // let upData = {};
-  // for (let i = 0; i < data.length; i++) {
-  //   upData[`photo_${i}`] = data[i];
-  // }
+  
   const doc = {
-    title: title,
     album: count + 1,
     data: data,
   };
+  if (title) doc["title"] = title;
   if (content && coll == "service_albums") doc["content"] = content;
 
   try {
@@ -189,10 +183,10 @@ export const addData = async (coll, data, title, content) => {
 };
 export const updateData = async (coll, id, data, title, content) => {
   if (data.length == 0) {
-    return toast.error("Fotoğraf Yükleyiniz");
+    return toast.error("Fotoğraf yükleyiniz");
   }
   if (!title) {
-    return toast.error("Başlık Giriniz");
+    return toast.error("Başlık giriniz");
   }
   const docRef = doc(db, coll, id);
   const upData = {
@@ -217,7 +211,7 @@ export const uploadSinglePhoto = async (coll, id, newData) => {
     allData.forEach((data) => allDataIndexesArr.push(Number(data.split("_")[1])));
     allDataIndexesArr.sort((a, b) => b - a);
   } else {
-    toast.error("There is no such document");
+    toast.error("Döküman bulunamadı!");
   }
   const newDataIndex = allDataIndexesArr[0] + 1 || 1;
   upData[`data.photo_${newDataIndex}`] = newData;
@@ -235,7 +229,7 @@ export const deleteDocument = async (coll, id) => {
 
   try {
     await deleteDoc(docRef);
-    toast.success("Albüm silindi");
+    toast.success("Albüm silindi.");
   } catch (err) {
     toast.error(err.message);
   }

@@ -13,6 +13,7 @@ import AlbumComp from "../pages/admin/components/AlbumComp";
 import AboutUs from "../pages/aboutus";
 import SingleAlbum from "../pages/singleAlbum";
 import NotFound from "../pages/notFound";
+import CoverImage_ from "../pages/admin/cover/_CoverImage";
 
 const routes = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const routes = createBrowserRouter([
       {
         path: "uploads",
         element: <Upload_ />,
+      },
+      {
+        path: "cover",
+        element: <CoverImage_ />,
       },
       {
         path: "services",

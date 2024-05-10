@@ -26,7 +26,7 @@ export default function HomeSlider() {
   }, [slideIndex]);
 
   return (
-    <div className="h-[82.5vh] w-full relative flex rounded-t-md overflow-hidden">
+    <div className="2xl:h-[80vh] xl:h-[70vh] lg:h-[60vh] md:h-[55vh] sm:h-[50vh] h-[45vh] w-full relative flex rounded-t-md overflow-hidden transition-all">
       <div
         style={{ backgroundImage: `url(${sliders[slideIndex]})` }}
         className="w-full h-full duration-500 bg-center bg-cover relative overflow-hidden">

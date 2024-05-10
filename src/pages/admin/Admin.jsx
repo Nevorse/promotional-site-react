@@ -4,29 +4,31 @@ import { Link } from "react-router-dom";
 
 export default function Admin() {
   return (
-    <div>
-      <div className="mt-10">
-        <Link to={"uploads"}>
-          <div className="flex flex-col items-center justify-center">
-            <MdOutlineUploadFile size={80} />
-            <span>Upload</span>
-          </div>
-        </Link>
-      </div>
-      <div className="flex justify-center gap-20 mt-20">
-        <Link to={"projects"}>
-          <div className="flex flex-col items-center justify-center">
-            <AiOutlineFolderOpen size={80} />
-            <span>{"Projeler"}</span>
-          </div>
-        </Link>
-        <Link to={"services"}>
-          <div className="flex flex-col items-center justify-center">
-            <AiOutlineFolderOpen size={80} />
-            <span>{"Servisler"}</span>
-          </div>
-        </Link>
-      </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 flex-wrap justify-center gap-y-10 gap-x-20 mt-10">
+      <Link to={"uploads"}>
+        <div className="flex flex-col items-center justify-center w-[120px] text-center">
+          <MdOutlineUploadFile size={80} />
+          <span>Album Yükleme</span>
+        </div>
+      </Link>
+      <Link to={"cover"}>
+        <div className="flex flex-col items-center justify-center w-[120px] text-center">
+          <MdOutlineUploadFile size={80} />
+          <span>Anasayfa Kapak Fotoğrafı</span>
+        </div>
+      </Link>
+      <Link to={"projects"}>
+        <div className="flex flex-col items-center justify-center w-[120px] text-center">
+          <AiOutlineFolderOpen size={80} />
+          <span>{"Projeler"}</span>
+        </div>
+      </Link>
+      <Link to={"services"}>
+        <div className="flex flex-col items-center justify-center w-[120px] text-center">
+          <AiOutlineFolderOpen size={80} />
+          <span>{"Servisler"}</span>
+        </div>
+      </Link>
     </div>
   );
 }
