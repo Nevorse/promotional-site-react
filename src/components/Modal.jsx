@@ -4,6 +4,7 @@ import store from "../store";
 import { destroyModal } from "../store/modal";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { GoDotFill } from "react-icons/go";
+import { CgClose } from "react-icons/cg";
 import classNames from "classnames";
 import { motion } from "framer-motion";
 
@@ -51,6 +52,12 @@ export default function Modal({ img, index = 0 }) {
           }}
           className="absolute w-10 h-10 top-[48%] right-0 mr-[5%] text-white/85 z-10 cursor-pointer transition-all hover:scale-110"
         />
+        <CgClose
+          onClick={() => {
+            store.dispatch(destroyModal());
+          }}
+          className="absolute w-10 h-10 top-0 right-0 mr-[3%] mt-[3%] text-white/85 z-10 cursor-pointer transition-all hover:scale-110"
+        />
 
         <div
           style={{ backgroundImage: `url(${currentImg})` }}
@@ -61,7 +68,7 @@ export default function Modal({ img, index = 0 }) {
           />
         </div>
 
-        <div className="flex text-white gap-x-3">
+        <div className="flex text-white gap-x-3 h-5 xl:h-6">
           {modal?.data?.map((e, i) => (
             <button
               key={i}

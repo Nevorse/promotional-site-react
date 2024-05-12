@@ -21,10 +21,10 @@ export default function Home() {
   }, []);
 
   return (
-    <motion.div 
-    initial={{opacity: 0}}
-    animate={{opacity: 1}}
-    className="max-w-[90%] min-h-[90vh] mx-auto mt-8">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="max-w-[90%] min-h-[90vh] mx-auto mt-8">
       <HomeSlider />
       <HomeServices />
       <HomeProjects />

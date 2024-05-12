@@ -12,7 +12,7 @@ const modal = createSlice({
       state.modal = action.payload;
     },
     destroyModal: (state) => {
-        state.modal = [];
+        state.modal = {};
       },
   },
 });

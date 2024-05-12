@@ -8,15 +8,21 @@ import {
 } from "./store/collections";
 
 export const setAllData = async (coll, limit) => {
-  const allData = await getAllData(coll, limit);
+  let allData;
   if (coll == "project_albums") {
+    allData = await getAllData(coll, limit);
     store.dispatch(setAllProjectsDataHandler(allData));
   }
   if (coll == "service_albums") {
+    allData = await getAllData(coll, limit);
     store.dispatch(setAllServicesDataHandler(allData));
   }
   if (coll == "cover_images") {
+    allData = await getAllData(coll, limit);
     store.dispatch(setAllCoverImagesDataHandler(allData));
+  } else {
+    const coverData = await getAllData("cover_images", 2);
+    store.dispatch(setAllCoverImagesDataHandler(coverData));
   }
   return allData;
 };
