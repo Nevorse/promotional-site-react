@@ -48,7 +48,7 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
             <AnimatePresence>
               {openNavbar && (
                 <div
-                  className="fixed inset-0"
+                  className="fixed inset-0 z-40"
                   aria-label="outside"
                   ref={outsiteRef}
                   onClick={(e) => {
@@ -60,7 +60,7 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
                     initial={{ opacity: 0, translateX: 20 }}
                     animate={{ opacity: 1, translateX: 0 }}
                     exit={{ opacity: 0, translateX: 20 }}
-                    className="fixed top-0 right-0 max-w-[370px] pr-5 -mr-5 w-full h-full flex flex-col bg-black/30 backdrop-blur-lg z-40">
+                    className="fixed top-0 right-0 max-w-[370px] pr-5 -mr-5 w-full h-full flex flex-col bg-black/30 backdrop-blur-lg">
                     <div className="mr-[10%]">
                       <div className="h-24 flex items-center justify-end">
                         <button
