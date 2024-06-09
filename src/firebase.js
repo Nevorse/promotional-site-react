@@ -133,7 +133,6 @@ export const getAllData = async (coll, lim) => {
 export const updateAllDataAlignment = async (coll, data) => {
   const dataArr = [...data];
   const revArr = dataArr.reverse();
-  console.log(revArr);
 
   for (let i = 0; i < revArr.length; i++) {
     const docRef = doc(db, coll, revArr[i].id);
@@ -146,7 +145,7 @@ export const updateAllDataAlignment = async (coll, data) => {
       toast.error(err.message);
     }
   }
-  return "finished";
+  return "Kaydedildi";
 };
 export const getSingleData = async (coll, id) => {
   const docRef = doc(db, coll, id);

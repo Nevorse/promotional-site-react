@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 
 export default function Admin() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 flex-wrap justify-center gap-y-10 gap-x-20 mt-10">
+    <div className="grid grid-cols-1 mt-5 sm:grid-cols-2 sm:mt-10 gap-x-10 gap-y-6 sm:gap-y-10">
+
       <Link to={"uploads"}>
         <div className="flex flex-col items-center justify-center w-[120px] text-center">
           <MdOutlineUploadFile size={80} />
@@ -29,6 +30,7 @@ export default function Admin() {
           <span>{"Servisler"}</span>
         </div>
       </Link>
+
     </div>
   );
 }

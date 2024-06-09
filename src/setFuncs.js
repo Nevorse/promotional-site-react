@@ -13,16 +13,17 @@ export const setAllData = async (coll, limit) => {
     allData = await getAllData(coll, limit);
     store.dispatch(setAllProjectsDataHandler(allData));
   }
-  if (coll == "service_albums") {
+  else if (coll == "service_albums") {
     allData = await getAllData(coll, limit);
     store.dispatch(setAllServicesDataHandler(allData));
   }
-  if (coll == "cover_images") {
+  else if (coll == "cover_images") {
     allData = await getAllData(coll, limit);
     store.dispatch(setAllCoverImagesDataHandler(allData));
-  } else {
-    const coverData = await getAllData("cover_images", 2);
-    store.dispatch(setAllCoverImagesDataHandler(coverData));
+  } 
+  else {
+    allData = await getAllData("cover_images", 2);
+    store.dispatch(setAllCoverImagesDataHandler(allData));
   }
   return allData;
 };
