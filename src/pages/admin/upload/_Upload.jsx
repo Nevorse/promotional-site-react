@@ -1,74 +1,54 @@
-import { useState } from "react";
-import _ImageComp from "../components/_ImageComp";
-import _FileInput from "../components/_FileInput";
-import { deleteObject } from "firebase/storage";
-import toast from "react-hot-toast";
-import { addData } from "../../../firebase";
+import { useEffect, useState } from "react";
 import { ConfigProvider, Switch } from "antd";
 import classNames from "classnames";
+import { addData } from "../../../firebase";
+import toast from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
 import { setAllData } from "../../../setFuncs";
-import { useBeforeUnload } from "react-router-dom";
-import useCheckUnsavedDataAndRedirect from "../../../hooks/useCheckUnsavedDataAndRedirect";
 
-export default function Upload_() {
+export default function _Upload() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [albumTitle, setAlbumTitle] = useState("");
   const [albumContent, setAlbumContent] = useState("");
-  const [serviceType, setServiceType] = useState(false);
-  const [uploadedImages, setUploadedImages] = useState([]);
+  const [collection, setCollection] = useState("");
+  const [typeCheck, setTypeCheck] = useState(false);
 
-  useBeforeUnload(uploadedImages.length > 0 ? (e) => e.preventDefault() : null);
-  const checkFunction = useCheckUnsavedDataAndRedirect(uploadedImages.length);
+  useEffect(() => {
+    const coll = typeCheck ? "service_albums" : "project_albums";
+    setCollection(coll);
+  }, [typeCheck]);
 
-  const coverHandler = (item) => {
-    const index = uploadedImages.indexOf(item);
-    const arr = [...uploadedImages];
-    arr.splice(index, 1);
-    arr.unshift(item);
-    setUploadedImages(arr);
-  };
-  const deleteHandle = (obj) => {
-    const ref = Object.values(obj)[0];
-    deleteObject(ref)
-      .then(() => {
-        setUploadedImages((prev) => [...prev].filter((item) => item != obj));
-        toast.success("Dosya silindi.");
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
-  };
-  const handleAlbumUpload = async () => {
-    const collection = serviceType ? "service_albums" : "project_albums";
-    let data = [];
-    uploadedImages.forEach((element) => {
-      const img = Object.keys(element)[0];
-      data.push(img);
-    });
-    if (albumTitle.trim() && !data.length == 0) {
-      const response = await addData(collection, data, albumTitle, albumContent);
+  const createAlbum = async () => {
+    if (albumTitle.trim()) {
+      const response = await addData(
+        collection,
+        undefined,
+        albumTitle,
+        albumContent
+      );
       const id = response.id;
       if (id) {
         toast.success("Albüm Kaydedildi.");
         setAllData(collection);
         /*---Clear all---*/
-        setUploadedImages([]);
         setAlbumTitle("");
         setAlbumContent("");
       } else toast.error("Hata");
-    } else if (data.length == 0) {
-      return toast.error("Fotoğraf Yükleyiniz.");
     } else if (!albumTitle.trim()) {
       toast.error("Başlık Giriniz.");
     }
   };
 
+  const prevPage = () => {
+    const loc = location.pathname.split("/");
+    loc.pop();
+    const string = loc.toString().replace(/,/g, "/");
+    navigate(string);
+  };
+
   return (
     <div className="flex flex-col items-center gap-16 w-[100vw] relative">
-      <button
-        onClick={checkFunction}
-        className="absolute left-[5vw] top-[-34px] bg-indigo-500 text-white border border-indigo-500 rounded-lg px-4 py-1.5 text-[15px] leading-5">
-        Geri git
-      </button>
       <ConfigProvider
         theme={{
           components: {
@@ -76,8 +56,11 @@ export default function Upload_() {
           },
         }}>
         <div className="mt-10 flex flex-col items-center gap-10 w-[90%] max-w-[500px]">
-          <_FileInput setUploadedImages={setUploadedImages} />
-
+          <button
+            onClick={prevPage}
+            className="absolute left-[5vw] top-[-34px] bg-indigo-500 text-white border border-indigo-500 rounded-lg px-4 py-1.5 text-[15px] leading-5">
+            Geri git
+          </button>
           <div className="flex flex-col items-center gap-7 w-full">
             <input
               type="text"
@@ -90,7 +73,7 @@ export default function Upload_() {
               className="w-28 !bg-blue-400"
               checkedChildren="Servisler"
               unCheckedChildren="Projeler"
-              onChange={(value) => setServiceType(value)}
+              onChange={(value) => setTypeCheck(value)}
             />
 
             <textarea
@@ -99,31 +82,19 @@ export default function Upload_() {
               rows={"6"}
               placeholder="Albüm İçeriği"
               className={classNames(
-                "border border-slate-400 max-h-[250px] transition-all duration-300 bg-slate-50 p-2 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800",
+                "max-h-[250px] p-2 border border-slate-400 transition-all duration-300 bg-slate-50 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800",
                 {
-                  "!max-h-0 !py-0 !border-0": !serviceType,
+                  "!max-h-0 !py-0 !border-0": !typeCheck,
                 }
               )}
             />
             <button
               className=" bg-lime-600 px-4 py-2 rounded-md text-neutral-50 border border-lime-600 shadow-md
               hover:bg-lime-500/90 hover:text-white transition-colors"
-              onClick={handleAlbumUpload}>
-              Albümü Kaydet
+              onClick={createAlbum}>
+              Albüm Oluştur
             </button>
           </div>
-        </div>
-        <div className="flex flex-wrap gap-5 justify-center">
-          {uploadedImages.map((item) => (
-            <div key={Object.keys(item)[0]} className="text-center">
-              <_ImageComp
-                url={Object.keys(item)[0]}
-                deleteHandle={() => deleteHandle(item)}
-                coverHandle={() => coverHandler(item)}
-                coverImage={uploadedImages[0]}
-              />
-            </div>
-          ))}
         </div>
       </ConfigProvider>
     </div>

@@ -58,7 +58,7 @@ export default function OurProjects() {
         variants={containerAnimation} className="flex flex-wrap justify-center gap-x-8 gap-y-9 my-12">
           {projects?.map((doc) => (
             <motion.div variants={itemAnimation} key={doc.id}>
-            <Link to={`${doc?.album + "_" + doc?.title}`}>
+            <Link to={`${doc?.index + "_" + doc?.title}`}>
               <CardComp doc={doc} type={2} />
             </Link>
             </motion.div>

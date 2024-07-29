@@ -1,55 +1,32 @@
 import _Card from "../components/_Card";
 import { useEffect, useState } from "react";
-import { setAllData, setDeleteData } from "../../../setFuncs";
+import { setAllData } from "../../../setFuncs";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { deleteObject, ref } from "firebase/storage";
-import { storage, updateAllDataAlignment } from "../../../firebase";
+import { deleteDocument, updateAllDataAlignment } from "../../../firebase";
 import toast from "react-hot-toast";
 
 export default function _Collection() {
-  const { projects, services } = useSelector((state) => state.collections);
-  const [collData, setCollData] = useState([]);
-  const [collection, setCollection] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
-
-  useEffect(() => {
+  const { projects, services } = useSelector((state) => state.collections);
+  const [collection, setCollection] = useState(() => {
     const coll = location.pathname.split("/")[2];
-    if (coll == "projects") {
-      setCollData(projects);
-      setCollection("project_albums");
-    }
-    if (coll == "services") {
-      setCollData(services);
-      setCollection("service_albums");
-    }
-  }, [projects, services]);
+    if (coll == "projects") return "project_albums";
+    if (coll == "services") return "service_albums";
+    else return "";
+  });
+  const [collData, setCollData] = useState([]);
 
   useEffect(() => {
-    if (collData.length < 1) {
-      setAllData(collection).then((allData) => setCollData(allData));
-    }
-  }, [collection]);
+    if (collection == "project_albums") setCollData(projects);
+    if (collection == "service_albums") setCollData(services);
+  }, [projects, services]);
 
   const deleteHandle = (id) => {
     const conf = confirm("albümü sil");
     if (conf) {
-      let delData = {};
-      for (let i = 0; i < collData.length; i++) {
-        if (collData[i].id == id) {
-          delData = collData[i];
-        }
-      }
-      setDeleteData(collection, id, collData).then(() => {
-        const data = delData.data;
-        for (let i = 0; i < data.length; i++) {
-          const imageName = data[i].split("%2F")[1].split("?")[0];
-          const decodeName = decodeURI(imageName);
-          const imageRef = ref(storage, `images/${decodeName}`);
-          deleteObject(imageRef).catch((err) => toast.error(err.message));
-        }
-      });
+      deleteDocument(collection, id);
     }
   };
   const handleDocAlignment = (project) => {
@@ -59,19 +36,26 @@ export default function _Collection() {
   };
   const handleSaveDocAlignment = () => {
     updateAllDataAlignment(collection, collData)
-      .then((res) => {
+      .then(() => {
         setAllData(collection).then((allData) => {
           setCollData(allData);
-          toast.success(res);
+          toast.success("Kaydedildi.");
         });
       })
       .catch((err) => toast.error(err.message));
   };
 
+  const prevPage = () => {
+    const loc = location.pathname.split("/");
+    loc.pop();
+    const string = loc.toString().replace(/,/g, "/");
+    navigate(string);
+  };
+
   return (
     <div className="flex flex-col items-center w-[95vw] relative">
       <button
-        onClick={() => navigate(-1)}
+        onClick={prevPage}
         className="absolute left-[5vw] top-[-34px] bg-indigo-500 text-white border border-indigo-500 rounded-lg px-4 py-1.5 text-[15px] leading-5">
         Geri git
       </button>

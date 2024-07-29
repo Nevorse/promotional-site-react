@@ -1,15 +1,13 @@
-import bgImage_1 from "../../../assets/images/background-image-1.webp";
-import bgImage_2 from "../../../assets/images/background-image-2.webp";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { setAllData } from "../../../setFuncs";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import SlideComp from "./SlideComp";
 
 export default function HomeSlider() {
   const { coverImages } = useSelector((state) => state.collections);
-
+  const [slideImages, setslideImages] = useState(coverImages[0]?.data);
   const [slideIndex, setSlideIndex] = useState(0);
   const [sliderTexts, setSliderTexts] = useState([
     "Lorem ipsum dolor sit amet.",
@@ -17,7 +15,9 @@ export default function HomeSlider() {
   ]);
 
   useEffect(() => {
-    if (coverImages.length < 1) setAllData();
+    if (coverImages.length < 1) {
+      setAllData("cover_images").then((allData) => setslideImages(allData[0]?.data));
+    }
   }, []);
 
   const goToNext = () => {
@@ -37,8 +37,8 @@ export default function HomeSlider() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="2xl:h-[80vh] xl:h-[70vh] lg:h-[60vh] md:h-[55vh] sm:h-[50vh] h-[45vh] w-full relative flex rounded-t-md overflow-hidden">
-      {coverImages.map((doc, index) => (
-        <SlideComp key={index} index={index} doc={doc} slideIndex={slideIndex} />
+      {slideImages?.map((imgUrl, index) => (
+        <SlideComp key={index} index={index} imgUrl={imgUrl} slideIndex={slideIndex} />
       ))}
       <div className="absolute inset-0 top-[40%] w-11/12 mx-auto text-white text-4xl font-semibold transition-all">
         {"sliderTexts"}

@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { login, logout } from "../../firebase";
 import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { setAllData } from "../../setFuncs";
 
 export default function Index() {
   const [eMail, setEMail] = useState("");
   const [password, setPassword] = useState("");
   const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    setAllData("project_albums");
+    setAllData("service_albums");
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

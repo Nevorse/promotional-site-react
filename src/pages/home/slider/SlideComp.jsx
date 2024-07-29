@@ -1,14 +1,13 @@
 import classNames from "classnames";
-import { motion } from "framer-motion";
 
-export default function SlideComp({ index, doc, slideIndex }) {
+export default function SlideComp({ index, imgUrl, slideIndex }) {
   return (
     <div
       // initial={{ opacity: 0 }}
       // animate={{ opacity: 1 }}
       // exit={{ opacity: 0 }}
       style={{
-        backgroundImage: `url(${doc?.data})`,
+        backgroundImage: `url(${imgUrl})`,
       }}
       className={classNames(
         "w-full h-full bg-center bg-cover absolute opacity-0 transition-all duration-500",

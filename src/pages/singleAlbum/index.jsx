@@ -9,62 +9,53 @@ import { setModal } from "../../store/modal";
 import store from "../../store";
 
 export default function SingleAlbum() {
-  const [document, setDocument] = useState();
-  const [allDocuments, setAllDocuments] = useState([]);
-  const [coll, setColl] = useState("");
-  const location = useLocation();
   const { projects, services } = useSelector((state) => state.collections);
   const { modal } = useSelector((state) => state.modal);
+  const location = useLocation();
+  const [coll, setColl] = useState(location.pathname.split("/")[1]);
+  const [collection, setCollection] = useState(() => {
+    const path = location.pathname.split("/")[1];
+    if (path == "projects") return "project_albums";
+    if (path == "services") return "service_albums";
+    else return "";
+  });
+  const [allDocuments, setAllDocuments] = useState([]);
+  const [document, setDocument] = useState();
   const [modalImage, setModalImage] = useState();
   const [modalImageIndex, setModalImageIndex] = useState();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
   useEffect(() => {
-    const paths = checkCollandAlbum();
-    if (paths[0] == "service_albums") {
-      setColl("services");
-    } else if (paths[0] == "project_albums") {
-      setColl("projects");
-    }
-
-    if (paths[0] == "service_albums" && services.length == 0) {
-      setAllData(paths[0]).then((allData) => {
-        setAllDocuments(allData);
-        setDataHandler(allData);
-      });
-    } else if (paths[0] == "project_albums" && projects.length == 0) {
-      setAllData(paths[0]).then((allData) => {
-        setAllDocuments(allData);
-        setDataHandler(allData);
-      });
-    } else {
-      if (paths[0] == "service_albums") {
-        setAllDocuments(services);
-        setDataHandler(services);
-      } else if (paths[0] == "project_albums") {
-        setAllDocuments(projects);
-        setDataHandler(projects);
-      }
-    }
+    setColl(location.pathname.split("/")[1]);
+    getData();
   }, [location]);
 
-  const checkCollandAlbum = () => {
-    const coll = location.pathname.split("/")[1];
-    const alb = location.pathname.split("/")[2].split("_")[0];
-    if (coll == "services") {
-      return ["service_albums", alb];
+  const getData = async () => {
+    let documentId = false;
+    if (collection == "project_albums") {
+      documentId = findAndSetAlbum(projects);
+    } else if (collection == "service_albums") {
+      documentId = findAndSetAlbum(services);
     }
-    if (coll == "projects") {
-      return ["project_albums", alb];
+    if (!documentId) {
+      const allData = await setAllData(collection);
+      findAndSetAlbum(allData);
     }
   };
-  const setDataHandler = (allData) => {
-    const paths = checkCollandAlbum();
-    const doc = allData.filter((e) => e.album == paths[1]);
-    setDocument(doc[0]);
+  const findAndSetAlbum = (allData) => {
+    const docIndex = location.pathname.split("/")[2].split("_")[0];
+    let documentId = false;
+    setAllDocuments(allData);
+    for (let i = 0; i < allData.length; i++) {
+      if (allData[i].index == docIndex) {
+        setDocument(allData[i]);
+        documentId = allData[i].id;
+        break;
+      }
+    }
+    return documentId;
   };
   const openModalHandler = (img, index) => {
     setModalImage(img);
@@ -120,7 +111,7 @@ export default function SingleAlbum() {
 
             <div className="w-full flex flex-col gap-y-1">
               {allDocuments?.map((doc) => (
-                <Link key={doc?.id} to={`/${coll}/${doc?.album + "_" + doc?.title}`}>
+                <Link key={doc?.id} to={`/${coll}/${doc?.index + "_" + doc?.title}`}>
                   <div
                     className={classNames(
                       "px-4 py-3 transition-all bg-neutral-100 text-neutral-800 hover:bg-neutral-800 hover:text-neutral-200",
@@ -140,17 +131,18 @@ export default function SingleAlbum() {
           <div className="flex flex-wrap justify-center mt-10 gap-6">
             {document?.data?.map((e, index) => {
               if (index == 0) return;
-              return (
-                <div
-                  key={index}
-                  onClick={() => openModalHandler(e, index)}
-                  className="cursor-pointer max-w-[500px] max-h-[350px] hover:scale-105 transition-transform">
-                  <img
-                    src={e}
-                    className="w-full h-full object-cover object-center rounded-md shadow-lg hover:shadow-2xl transition-shadow"
-                  />
-                </div>
-              );
+              else
+                return (
+                  <div
+                    key={index}
+                    onClick={() => openModalHandler(e, index)}
+                    className="cursor-pointer max-w-[500px] max-h-[350px] hover:scale-105 transition-transform">
+                    <img
+                      src={e}
+                      className="w-full h-full object-cover object-center rounded-md shadow-lg hover:shadow-2xl transition-shadow"
+                    />
+                  </div>
+                );
             })}
           </div>
         )}

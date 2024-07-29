@@ -18,7 +18,7 @@ export default function HomeProjects() {
         {projects?.map(
           (doc, index) =>
             index < 6 && (
-              <Link key={doc.id} to={`/projects/${doc?.album + "_" + doc?.title}`}>
+              <Link key={doc.id} to={`/projects/${doc?.index + "_" + doc?.title}`}>
                 <CardComp doc={doc} />
               </Link>
             )

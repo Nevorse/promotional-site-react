@@ -6,14 +6,13 @@ import Contact from "../pages/contact";
 import App from "../layout/App";
 import Index from "../pages/admin";
 import Admin from "../pages/admin/Admin";
-import Upload_ from "../pages/admin/upload/_Upload";
-// import _Services from "../pages/admin/services/_Services";
+import _Upload from "../pages/admin/upload/_Upload";
 import _Collection from "../pages/admin/collection/_Collection";
-import AlbumComp from "../pages/admin/components/AlbumComp";
+import AlbumComp from "../pages/admin/album/AlbumComp";
 import AboutUs from "../pages/aboutus";
 import SingleAlbum from "../pages/singleAlbum";
 import NotFound from "../pages/notFound";
-import CoverImage_ from "../pages/admin/cover/_CoverImage";
+import _CoverImage from "../pages/admin/cover/_CoverImage";
 
 const routes = createBrowserRouter([
   {
@@ -29,12 +28,12 @@ const routes = createBrowserRouter([
         element: <Services />,
       },
       {
-        path: "/services/:album",
-        element: <SingleAlbum />,
-      },
-      {
         path: "/projects",
         element: <OurProjects />,
+      },
+      {
+        path: "/services/:album",
+        element: <SingleAlbum />,
       },
       {
         path: "/projects/:album",
@@ -60,23 +59,23 @@ const routes = createBrowserRouter([
       },
       {
         path: "uploads",
-        element: <Upload_ />,
+        element: <_Upload />,
       },
       {
         path: "cover",
-        element: <CoverImage_ />,
+        element: <AlbumComp />,
       },
       {
         path: "services",
         element: <_Collection />,
       },
       {
-        path: "services/:id",
-        element: <AlbumComp />,
-      },
-      {
         path: "projects",
         element: <_Collection />,
+      },
+      {
+        path: "services/:id",
+        element: <AlbumComp />,
       },
       {
         path: "projects/:id",

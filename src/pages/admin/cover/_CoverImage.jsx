@@ -11,16 +11,14 @@ import {
 } from "../../../firebase";
 import { setAllData } from "../../../setFuncs";
 import { useSelector } from "react-redux";
-import { useBeforeUnload } from "react-router-dom";
-import useCheckUnsavedDataAndRedirect from "../../../hooks/useCheckUnsavedDataAndRedirect";
+import { useLocation, useNavigate } from "react-router-dom";
 
-export default function CoverImage_() {
+export default function _CoverImage() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [uploadedImages, setUploadedImages] = useState([]);
   const [collData, setCollData] = useState([]);
   const { coverImages } = useSelector((state) => state.collections);
-
-  useBeforeUnload(uploadedImages.length > 0 ? (e) => e.preventDefault() : null);
-  const checkFunction = useCheckUnsavedDataAndRedirect(uploadedImages.length);
 
   useEffect(() => {
     setCollData(coverImages);
@@ -98,10 +96,17 @@ export default function CoverImage_() {
     }
   };
 
+  const prevPage = () => {
+    const loc = location.pathname.split("/")
+    loc.pop();
+    const string = loc.toString().replace(/,/g, "/");
+    navigate(string);
+  }
+
   return (
     <div className="flex flex-col items-center gap-16 w-[100vw] relative">
       <button
-        onClick={checkFunction}
+        onClick={prevPage}
         className="absolute left-[5vw] top-[-34px] bg-indigo-500 text-white border border-indigo-500 rounded-lg px-4 py-1.5 text-[15px] leading-5">
         Geri git
       </button>

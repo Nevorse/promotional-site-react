@@ -58,7 +58,7 @@ export default function Services() {
           className="flex flex-wrap justify-center gap-8 my-12">
           {services?.map((doc) => (
             <motion.div variants={itemAnimation} key={doc?.id}>
-              <Link to={`${doc?.album + "_" + doc?.title}`}>
+              <Link to={`${doc?.index + "_" + doc?.title}`}>
                 <CardComp key={doc?.id} doc={doc} type={2} />
               </Link>
             </motion.div>

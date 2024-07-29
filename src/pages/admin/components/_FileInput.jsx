@@ -1,13 +1,41 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getFileName } from "../../../utils/helpers";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../../firebase";
 import toast from "react-hot-toast";
 
-export default function _FileInput({ setUploadedImages }) {
+export default function _FileInput({
+  collection,
+  docId,
+  setDocImages,
+  handleSaveAlbum,
+}) {
   const [imageFiles, setImageFiles] = useState([]);
   const [progress, setProgress] = useState(0);
+  const [singleProgress, setSingleProgress] = useState({});
+  const [counter, setCounter] = useState(0);
+  const [trigger, setTrigger] = useState(0);
   const inputRef = useRef();
+
+  useEffect(() => {
+    const len = imageFiles.length;
+    if (len > 0 && trigger > 0) {
+      let sum = 0;
+      for (let i = 0; i < len; i++) {
+        const singleProg = singleProgress[i] || 0;
+        sum = sum + singleProg;
+      }
+      setProgress(sum / len);
+    }
+    if (counter == len && counter > 0) {
+      handleSaveAlbum();
+      setImageFiles([]);
+      setCounter(0);
+      setTrigger(0);
+      inputRef.current.value = null;
+      toast.success("Yükleme Tamamlandı. ✔️", { duration: 4000 });
+    }
+  }, [counter, trigger]);
 
   const onChangeHandle = (e) => {
     const files = e.target.files;
@@ -16,36 +44,40 @@ export default function _FileInput({ setUploadedImages }) {
     }
   };
   const handleImageUploads = () => {
+    setSingleProgress({});
+    setProgress(0);
     if (imageFiles.length > 0) {
-      imageFiles.forEach((file) => {
-        uploadImage(file);
-      });
+      for (let i = 0; i < imageFiles.length; i++) {
+        uploadImages(imageFiles[i], i);
+      }
     } else {
       toast.error("Dosya seçiniz.");
     }
   };
-  const uploadImage = (file) => {
+  const uploadImages = (file, index) => {
     const fileName = getFileName(file);
-    const imageRef = ref(storage, `images/${fileName}`);
+    const location = docId
+      ? `images/${collection}/${docId}/${fileName}`
+      : `images/${collection}/${fileName}`;
+    const imageRef = ref(storage, location);
     const uploadTask = uploadBytesResumable(imageRef, file);
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setProgress(progress);
+        const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        // Create separate state. **************************
+        let obj = singleProgress;
+        obj[index] = Math.floor(prog);
+        setSingleProgress(obj);
+        setTrigger((p) => p + 1);
       },
       (error) => {
         toast.error(error.message);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          let obj = {};
-          obj[`${downloadURL}`] = uploadTask.snapshot.ref;
-          setUploadedImages((prev) => [...prev, obj]);
-          toast.success("Yükleme Tamamlandı.");
-          setImageFiles([]);
-          inputRef.current.value = null;
-          setProgress(0);
+          setDocImages((prev) => [...prev, downloadURL]);
+          setCounter((c) => c + 1);
         });
       }
     );
