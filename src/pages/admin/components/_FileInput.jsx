@@ -40,7 +40,19 @@ export default function _FileInput({
   const onChangeHandle = (e) => {
     const files = e.target.files;
     for (let i = 0; i < files.length; i++) {
-      setImageFiles((prev) => [...prev, files[i]]);
+      const acceptedTypes = [
+        "image/png",
+        "image/jpg",
+        "image/jpeg",
+        "image/webp",
+        "image/gif",
+      ];
+      if (acceptedTypes.includes(files[i].type)) {
+        setImageFiles((prev) => [...prev, files[i]]);
+      } else {
+        toast.error(files[i].type + " " + "dosya formatı desteklenmiyor")
+      }
+
     }
   };
   const handleImageUploads = () => {
@@ -121,6 +133,7 @@ export default function _FileInput({
             id="dropzone-file"
             type="file"
             multiple={true}
+            accept="image/png, image/jpg, image/jpeg, image/webp, image/gif"
           />
         </label>
       </div>

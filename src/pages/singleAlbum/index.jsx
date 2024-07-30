@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Modal from "../../components/Modal";
 import { setModal } from "../../store/modal";
 import store from "../../store";
+import toast from "react-hot-toast";
 
 export default function SingleAlbum() {
   const { projects, services } = useSelector((state) => state.collections);
@@ -41,7 +42,8 @@ export default function SingleAlbum() {
     }
     if (!documentId) {
       const allData = await setAllData(collection);
-      findAndSetAlbum(allData);
+      const docCheck = findAndSetAlbum(allData);
+      if (!docCheck) toast.error("Doküman bulunamadı!");
     }
   };
   const findAndSetAlbum = (allData) => {
@@ -127,7 +129,7 @@ export default function SingleAlbum() {
             </div>
           </div>
         </div>
-        {coll == "projects" && (
+        {(coll == "projects" && document?.data.length > 1) && (
           <div className="flex flex-wrap justify-center mt-10 gap-6">
             {document?.data?.map((e, index) => {
               if (index == 0) return;

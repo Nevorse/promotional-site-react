@@ -7,30 +7,33 @@ import SlideComp from "./SlideComp";
 
 export default function HomeSlider() {
   const { coverImages } = useSelector((state) => state.collections);
-  const [slideImages, setslideImages] = useState(coverImages[0]?.data);
+  const [slideImages, setSlideImages] = useState(coverImages[0]?.data);
   const [slideIndex, setSlideIndex] = useState(0);
-  const [sliderTexts, setSliderTexts] = useState([
-    "Lorem ipsum dolor sit amet.",
-    "Lorem ipsum dolor sit amet consectetur adipisicing.",
-  ]);
+  const [sliderTexts, setSliderTexts] = useState(
+    coverImages[0]?.cover_texts || ["", ""]
+  );
 
   useEffect(() => {
     if (coverImages.length < 1) {
-      setAllData("cover_images").then((allData) => setslideImages(allData[0]?.data));
+      setAllData("cover_images").then((allData) => {
+        setSlideImages(allData[0]?.data);
+        setSliderTexts(allData[0]?.cover_texts);
+      });
     }
   }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      goToNext();
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [slideIndex]);
 
   const goToNext = () => {
     const isLastSlide = slideIndex >= 1;
     const newIndex = isLastSlide ? 0 : slideIndex + 1;
     setSlideIndex(newIndex);
   };
-  useEffect(() => {
-    const timer = setInterval(() => {
-      goToNext();
-    }, 3000);
-    return () => clearInterval(timer);
-  }, [slideIndex]);
 
   return (
     <motion.div
@@ -38,10 +41,15 @@ export default function HomeSlider() {
       animate={{ opacity: 1 }}
       className="2xl:h-[80vh] xl:h-[70vh] lg:h-[60vh] md:h-[55vh] sm:h-[50vh] h-[45vh] w-full relative flex rounded-t-md overflow-hidden">
       {slideImages?.map((imgUrl, index) => (
-        <SlideComp key={index} index={index} imgUrl={imgUrl} slideIndex={slideIndex} />
+        <SlideComp
+          key={index}
+          index={index}
+          imgUrl={imgUrl}
+          slideIndex={slideIndex}
+        />
       ))}
       <div className="absolute inset-0 top-[40%] w-11/12 mx-auto text-white text-4xl font-semibold transition-all">
-        {"sliderTexts"}
+        {sliderTexts[slideIndex]}
       </div>
 
       {/* <div>

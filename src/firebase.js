@@ -170,6 +170,7 @@ export const updateData = async (
   data,
   title,
   content,
+  coverTexts,
   prevDocImagesCount
 ) => {
   const docRef = doc(db, coll, id);
@@ -178,6 +179,9 @@ export const updateData = async (
     docum["data"] = data;
     if (title) docum["title"] = title;
     if (content && coll == "service_albums") docum["content"] = content;
+    if ((coverTexts[0] || coverTexts[1]) && coll == "cover_images")
+      docum["cover_texts"] = coverTexts;
+
     try {
       updateDoc(docRef, docum);
     } catch (err) {
@@ -188,8 +192,7 @@ export const updateData = async (
     const docCheck = await getSingleData(coll, id);
     if (docCheck) updateFunction();
     else if (!docCheck) addData(coll, data, title, content, docRef);
-  } 
-  else {
+  } else {
     updateFunction();
   }
 };

@@ -26,6 +26,7 @@ export default function AlbumComp() {
   );
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [coverTexts, setCoverTexts] = useState(["", ""]);
   const [docImages, setDocImages] = useState([]);
   const [prevDocImagesCount, setPrevDocImagesCount] = useState(0);
 
@@ -61,6 +62,7 @@ export default function AlbumComp() {
   const setData = (document) => {
     if (document?.title) setTitle(document.title);
     if (document?.content) setContent(document.content);
+    if (document?.cover_texts) setCoverTexts(document.cover_texts);
     if (document?.data) {
       setPrevDocImagesCount(document.data.length);
       setDocImages(document.data);
@@ -73,6 +75,7 @@ export default function AlbumComp() {
       upData || docImages,
       title,
       content,
+      coverTexts,
       prevDocImagesCount
     )
       .then(() => {
@@ -139,17 +142,40 @@ export default function AlbumComp() {
             />
           </div>
         )}
-        {collection == "service_albums" && (
+        {collection == "service_albums" ? (
           <div>
-            <label htmlFor="title" className="font-semibold text-gray-700 ml-2">
+            <label htmlFor="content" className="font-semibold text-gray-700 ml-2">
               Albüm İçeriği
             </label>
             <textarea
+              id="content"
               onChange={(e) => setContent(e.target.value)}
               value={content}
               rows={"6"}
               className="border mt-1 border-slate-400 max-h-[250px] transition-all duration-300 bg-slate-50 p-2 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800"
             />
+          </div>
+        ) : (
+          <div>
+            <label className="font-semibold text-gray-700 ml-2">
+              Kapak Yazıları
+            </label>
+            <div className="grid gap-y-2">
+              <input
+                id="cover"
+                onChange={(e) => setCoverTexts((prev) => [e.target.value, prev[1]])}
+                value={coverTexts[0]}
+                type="text"
+                className="border mt-1 border-slate-400 bg-slate-50 p-2 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800"
+              />
+              <input
+                id="title"
+                onChange={(e) => setCoverTexts((prev) => [prev[0], e.target.value])}
+                value={coverTexts[1]}
+                type="text"
+                className="border mt-1 border-slate-400 bg-slate-50 p-2 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800"
+              />
+            </div>
           </div>
         )}
         <_FileInput
