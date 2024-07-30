@@ -137,7 +137,7 @@ export const getSingleData = async (coll, id) => {
       return false;
     }
   } catch (err) {
-    console.log(err.message);
+    toast.error(err.message);
   }
 };
 /***/
