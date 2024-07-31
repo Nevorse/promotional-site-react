@@ -128,7 +128,7 @@ export default function AlbumComp() {
         Geri git
       </button>
       <div className="flex flex-col max-w-[500px] w-full gap-5">
-        {collection != "cover_images" && (
+        {collection != "cover_images" ? (
           <div>
             <label htmlFor="title" className="font-semibold text-gray-700 ml-2">
               Albüm Başlığı
@@ -139,20 +139,6 @@ export default function AlbumComp() {
               value={title}
               type="text"
               className="border mt-1 border-slate-400 bg-slate-50 p-2 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800"
-            />
-          </div>
-        )}
-        {collection == "service_albums" ? (
-          <div>
-            <label htmlFor="content" className="font-semibold text-gray-700 ml-2">
-              Albüm İçeriği
-            </label>
-            <textarea
-              id="content"
-              onChange={(e) => setContent(e.target.value)}
-              value={content}
-              rows={"6"}
-              className="border mt-1 border-slate-400 max-h-[250px] transition-all duration-300 bg-slate-50 p-2 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800"
             />
           </div>
         ) : (
@@ -176,6 +162,20 @@ export default function AlbumComp() {
                 className="border mt-1 border-slate-400 bg-slate-50 p-2 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800"
               />
             </div>
+          </div>
+        )}
+        {collection == "service_albums" && (
+          <div>
+            <label htmlFor="content" className="font-semibold text-gray-700 ml-2">
+              Albüm İçeriği
+            </label>
+            <textarea
+              id="content"
+              onChange={(e) => setContent(e.target.value)}
+              value={content}
+              rows={"6"}
+              className="border mt-1 border-slate-400 max-h-[250px] transition-all duration-300 bg-slate-50 p-2 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800"
+            />
           </div>
         )}
         <_FileInput
