@@ -48,7 +48,7 @@ export default function HomeSlider() {
           slideIndex={slideIndex}
         />
       ))}
-      <div className="absolute inset-0 top-[40%] w-11/12 mx-auto text-white text-4xl font-semibold transition-all">
+      <div className="absolute inset-0 top-[40%] w-11/12 mx-auto text-[color:var(--color-secondary] text-4xl font-semibold transition-all">
         {sliderTexts[slideIndex]}
       </div>
 
@@ -60,7 +60,7 @@ export default function HomeSlider() {
           className="w-full h-full bg-center bg-cover transition-all duration-500">
           <div className="bg-black/30 absolute w-full h-full" />
         </div>
-        <div className="absolute inset-0 top-[40%] w-11/12 mx-auto text-white text-4xl font-semibold transition-all">
+        <div className="absolute inset-0 top-[40%] w-11/12 mx-auto text-[color:var(--color-secondary)] text-4xl font-semibold transition-all">
           {sliderTexts[slideIndex]}
         </div>
       </div> */}

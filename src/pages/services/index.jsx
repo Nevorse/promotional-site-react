@@ -43,10 +43,10 @@ export default function Services() {
       className="max-w-[85%] min-h-[90vh] mx-auto mt-12">
       <div className="flex flex-col justify-center">
         <div>
-          <h1 className="text-3xl font-bold tracking-wider mb-4 text-center">
+          <h1 className="text-3xl font-bold tracking-wider mb-4 text-center text-[color:var(--color-primary)]">
             Servislerimiz
           </h1>
-          <h5 className="text-center font-medium tracking-wide text-gray-800">
+          <h5 className="text-center font-medium tracking-wide text-[color:var(--color-primary)]">
             Hizmetlerimize buradan ulaşabilirsiniz
           </h5>
         </div>

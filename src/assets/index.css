@@ -6,3 +6,28 @@
   font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
+@layer base {
+  :root {
+    --theme-primary: #ced4da;
+    --theme-secondary: #adb5bd;
+    --theme-tertiary: #6c757d;
+    --theme-quaternary: #495057;
+
+    --color-primary: rgb(31, 41, 55);
+    --color-secondary: rgb(243, 244, 246);
+    --color-tertiary: rgb(74, 222, 128);
+  }
+}
+
+/* Koyu Beton
+--theme-primary: #ced4da;
+--theme-secondary: #adb5bd;
+--theme-tertiary: #6c757d;
+--theme-quaternary: #495057; */
+
+/* Sütlü Kahve
+--theme-primary: #ECEBDE;
+--theme-secondary: #D7D3BF;
+--theme-tertiary: #C1BAA1;
+--theme-quaternary: #A59D84; */

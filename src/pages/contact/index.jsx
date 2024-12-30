@@ -52,12 +52,12 @@ export default function Contact() {
 
       <div className="flex flex-col justify-center items-center mb-10">
         <div>
-          <h1 className="text-3xl font-bold tracking-wider mb-4 text-center">
+          <h1 className="text-3xl font-bold tracking-wider mb-4 text-center text-[color:var(--color-primary)]">
             İletişim Adreslerimiz
           </h1>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-16 my-12">
+        <div className="flex flex-wrap justify-center gap-16 my-12 text-[color:var(--color-primary)]">
           <div className="flex flex-col items-center gap-4">
             <FaPhoneAlt className="w-8 h-8" />
             <p className="text-2xl font-medium">0500 000 00 00</p>
@@ -84,10 +84,10 @@ export default function Contact() {
 
       <div className="flex flex-col justify-center items-center">
         <div className="flex flex-col items-center gap-2">
-          <h1 className="text-3xl font-bold tracking-wider mb-2.5 text-center">
+          <h1 className="text-3xl font-bold tracking-wider mb-2.5 text-center text-[color:var(--color-primary)]">
             Bize Yazın
           </h1>
-          <div className=" w-36 h-px bg-slate-500 mb-8" />
+          <div className=" w-36 h-px bg-[color:var(--color-primary)] mb-8" />
         </div>
 
         <ContactForm />

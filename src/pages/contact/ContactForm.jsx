@@ -82,7 +82,9 @@ export default function ContactForm() {
           <button
             type={process ? "button" : "submit"}
             className={classNames(
-              "inline-flex items-center px-5 py-2 mt-1 font-semibold leading-6 text-sm shadow-md rounded-md text-white bg-indigo-500 hover:bg-indigo-400 transition-all",
+              `inline-flex items-center px-5 py-2 mt-1 font-semibold leading-6 text-sm shadow-md 
+              rounded-md text-[color:var(--color-secondary)] bg-[color:var(--color-tertiary)]
+              hover:bg-[color:var(--color-tertiary)] transition-all`,
               {
                 "cursor-not-allowed": process,
               }
@@ -92,7 +94,7 @@ export default function ContactForm() {
             {process ? (
               <>
                 <svg
-                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-[color:var(--color-secondary)]"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24">

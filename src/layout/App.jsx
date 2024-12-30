@@ -23,7 +23,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className="bg-[color:var(--theme-primary)]">
       <Navbar innerWidth={windowSize[0]}/>
       {windowSize[0] > 768 && (
         <Navbar hidden={hidden} display={display} fixedNav={true}/>
@@ -31,7 +31,7 @@ function App() {
       <Toaster position="top-right" />
       <Outlet />
       <Footer />
-    </>
+    </div>
   );
 }
 

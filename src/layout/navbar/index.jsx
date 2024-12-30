@@ -22,14 +22,15 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
       className={
         fixedNav
           ? classNames(
-              "fixed bg-white shadow-md top-0 left-0 right-0 z-20 max-h-0 p-0 transition-all overflow-hidden",
+              "fixed bg-[color:var(--theme-tertiary)] shadow-md top-0 left-0 right-0 z-20 max-h-0 p-0 transition-all overflow-hidden",
               {
                 "!max-h-[96px]": !hidden,
                 "!max-h-0 !shadow-none": !display,
               }
             )
           : undefined
-      }>
+      }
+    >
       <div className="w-[90%] mx-auto flex items-center justify-between">
         <div className="h-24 w-24 shrink-0 p-[4px]">
           <Link to={"/"}>
@@ -41,7 +42,8 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
           <div>
             <button
               onClick={() => setOpenNavbar((p) => !p)}
-              className="p-2 rounded-full hover:bg-black/10 transition-colors">
+              className="p-2 rounded-full hover:bg-black/10 transition-colors"
+            >
               <HiOutlineMenuAlt3 className="w-7 h-7" />
             </button>
 
@@ -55,17 +57,20 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
                     if (e.target.ariaLabel == "outside") {
                       setOpenNavbar(false);
                     }
-                  }}>
+                  }}
+                >
                   <motion.div
                     initial={{ opacity: 0, translateX: 20 }}
                     animate={{ opacity: 1, translateX: 0 }}
                     exit={{ opacity: 0, translateX: 20 }}
-                    className="fixed top-0 right-0 max-w-[370px] pr-5 -mr-5 w-full h-full flex flex-col bg-black/30 backdrop-blur-lg">
+                    className="fixed top-0 right-0 max-w-[370px] pr-5 -mr-5 w-full h-full flex flex-col bg-black/30 backdrop-blur-lg"
+                  >
                     <div className="mr-[10%]">
                       <div className="h-24 flex items-center justify-end">
                         <button
                           onClick={() => setOpenNavbar((p) => !p)}
-                          className="p-2 rounded-full hover:bg-black/20 transition-colors">
+                          className="p-2 rounded-full hover:bg-black/20 transition-colors"
+                        >
                           <CgClose className="w-7 h-7 text-white" />
                         </button>
                       </div>
@@ -75,7 +80,8 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
                             onClick={() => setOpenNavbar(false)}
                             key={index}
                             to={item.link}
-                            className="hover:bg-black/20 px-4 py-2 rounded-xl transition-colors">
+                            className="hover:bg-black/20 px-4 py-2 rounded-xl transition-colors"
+                          >
                             {item.title}
                           </Link>
                         ))}
@@ -92,7 +98,8 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
               <Link
                 key={index}
                 to={item.link}
-                className="hover:bg-slate-400/20 px-4 py-2 rounded-xl transition-colors">
+                className="text-[color:var(--color-primary)] hover:bg-[color:var(--theme-quaternary)] px-4 py-2 rounded-xl transition-colors"
+              >
                 {item.title}
               </Link>
             ))}

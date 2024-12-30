@@ -6,12 +6,12 @@ export default function Accordion({ data }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex flex-col bg-white border border-neutral-300">
+    <div className="flex flex-col bg-[color:var(--theme-primary)]">
       <button
         onClick={() => {
           setOpen(!open);
         }}
-        className="font-semibold tracking-wide w-full flex p-6 justify-between items-center">
+        className="text-[color:var(--color-primary)] font-semibold tracking-wide w-full flex p-6 justify-between items-center">
         {data.title}
 
         <FaChevronDown className={classNames("transition-all duration-300", {
@@ -20,7 +20,7 @@ export default function Accordion({ data }) {
       </button>
       <div
         className={classNames(
-          "text-zinc-700 text-sm max-h-0 px-6 overflow-hidden transition-all duration-300",
+          "text-[color:var(--color-primary)] text-sm max-h-0 px-6 overflow-hidden transition-all duration-300",
           {
             "px-6 pb-6 max-h-[300px]": open,
           }

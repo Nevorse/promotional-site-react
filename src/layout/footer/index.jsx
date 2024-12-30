@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div className="bg-neutral-900 w-full text-gray-100 flex flex-wrap justify-center gap-x-40 gap-y-20 py-20">
+    <div className="bg-[color:var(--theme-quaternary)] w-full text-[color:var(--color-secondary)] flex flex-wrap justify-center gap-x-40 gap-y-20 py-20">
       <div className="flex flex-col gap-3 mx-5">
         <h2 className="text-2xl tracking-wide">İletişim Adreslerimiz</h2>
 
@@ -28,7 +28,7 @@ export default function Footer() {
           <a
             target="_blank"
             href="https://instagram.com/ozkartalmarangoz"
-            className="hover:text-green-400 text-green-400 sm:text-gray-100">
+            className="hover:text-[color:var(--color-tertiary)] text-[color:var(--color-tertiary)] sm:text-[color:var(--color-secondary)]">
             <div className="flex gap-3 items-center">
               <IoLogoInstagram className="w-5 h-5" />
               <p className="text-lg font-medium underline underline-offset-[6px] ">
@@ -42,13 +42,13 @@ export default function Footer() {
       <div className="flex flex-col gap-5 mx-5">
         <h2 className="text-2xl tracking-wide">Bağlantılar</h2>
         <div className="flex flex-col gap-3">
-          <div className="flex hover:text-green-400 gap-3 items-center">
+          <div className="flex hover:text-[color:var(--color-tertiary)] gap-3 items-center">
             <Link to={"/projects"}>Projelerimiz</Link>
           </div>
-          <div className="flex hover:text-green-400 gap-3 items-center">
+          <div className="flex hover:text-[color:var(--color-tertiary)] gap-3 items-center">
             <Link to={"/services"}>Hizmetlerimiz</Link>
           </div>
-          <div className="flex hover:text-green-400 gap-3 items-center">
+          <div className="flex hover:text-[color:var(--color-tertiary)] gap-3 items-center">
             <Link to={"/aboutus"}>Hakkımızda</Link>
           </div>
         </div>
