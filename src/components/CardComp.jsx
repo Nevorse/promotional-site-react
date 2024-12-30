@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { useEffect, useRef, useState } from "react";
 
 export default function CardComp({ type = 1, doc }) {
   // const [visibilty, setVisibilty] = useState(false);

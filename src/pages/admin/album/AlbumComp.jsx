@@ -14,8 +14,8 @@ export default function AlbumComp() {
   const { projects, services, coverImages } = useSelector(
     (state) => state.collections
   );
+  const coll = location.pathname.split("/")[2];
   const [collection, setCollection] = useState(() => {
-    const coll = location.pathname.split("/")[2];
     if (coll == "projects") return "project_albums";
     if (coll == "services") return "service_albums";
     if (coll == "cover") return "cover_images";
@@ -24,9 +24,12 @@ export default function AlbumComp() {
   const [docId, setDocId] = useState(() =>
     collection != "cover_images" ? location.pathname.split("/")[3] : "cover_doc_id"
   );
+  const [coverTexts, setCoverTexts] = useState(() => {
+    if (coll == "cover") return ["",""];
+    else return undefined;
+  });
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [coverTexts, setCoverTexts] = useState(["", ""]);
   const [docImages, setDocImages] = useState([]);
   const [prevDocImagesCount, setPrevDocImagesCount] = useState(0);
 
@@ -96,11 +99,13 @@ export default function AlbumComp() {
     deleteObject(imageRef)
       .then(() => {
         toast.success("Silindi.");
+        setDocImages(upData);
         handleSaveAlbum(upData);
       })
       .catch((err) => {
         toast.error(err.code);
         if (err.code == "storage/object-not-found") {
+          setDocImages(upData);
           handleSaveAlbum(upData);
         }
       });
@@ -194,7 +199,7 @@ export default function AlbumComp() {
       </button>
 
       <div className="flex gap-4 flex-wrap justify-center">
-        {docImages?.map((url, index) => (
+        {docImages.map((url, index) => (
           <div key={url + index} className="text-center">
             <_ImageComp
               url={url}

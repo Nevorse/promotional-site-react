@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/vector-logo.webp";
+import logo from "../../assets/images/Woodwork_250.png";
 import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
@@ -31,9 +31,9 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
           : undefined
       }>
       <div className="w-[90%] mx-auto flex items-center justify-between">
-        <div className="h-24 w-24 shrink-0">
+        <div className="h-24 w-24 shrink-0 p-[4px]">
           <Link to={"/"}>
-            <img src={logo} className="w-24 h-24 object-cover object-center" />
+            <img src={logo} className="object-cover object-center" />
           </Link>
         </div>
 

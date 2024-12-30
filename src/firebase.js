@@ -179,8 +179,7 @@ export const updateData = async (
     docum["data"] = data;
     if (title) docum["title"] = title;
     if (content && coll == "service_albums") docum["content"] = content;
-    if ((coverTexts[0] || coverTexts[1]) && coll == "cover_images")
-      docum["cover_texts"] = coverTexts;
+    if (coll == "cover_images") docum["cover_texts"] = coverTexts;
 
     try {
       updateDoc(docRef, docum);

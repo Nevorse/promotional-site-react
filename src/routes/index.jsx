@@ -12,7 +12,6 @@ import AlbumComp from "../pages/admin/album/AlbumComp";
 import AboutUs from "../pages/aboutus";
 import SingleAlbum from "../pages/singleAlbum";
 import NotFound from "../pages/notFound";
-import _CoverImage from "../pages/admin/cover/_CoverImage";
 
 const routes = createBrowserRouter([
   {

@@ -17,7 +17,7 @@ export default function HomeSlider() {
     if (coverImages.length < 1) {
       setAllData("cover_images").then((allData) => {
         setSlideImages(allData[0]?.data);
-        setSliderTexts(allData[0]?.cover_texts);
+        setSliderTexts(allData[0]?.cover_texts || ["", ""]);
       });
     }
   }, []);
