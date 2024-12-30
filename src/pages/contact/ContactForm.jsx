@@ -84,7 +84,7 @@ export default function ContactForm() {
             className={classNames(
               `inline-flex items-center px-5 py-2 mt-1 font-semibold leading-6 text-sm shadow-md 
               rounded-md text-[color:var(--color-secondary)] bg-[color:var(--color-tertiary)]
-              hover:bg-[color:var(--color-tertiary)] transition-all`,
+              hover:bg-[color:var(--color-tertiary)] hover:opacity-70 transition-all`,
               {
                 "cursor-not-allowed": process,
               }
