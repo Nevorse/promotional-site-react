@@ -28,7 +28,7 @@ export default function Home() {
       <HomeSlider />
       <HomeServices />
       <HomeProjects />
-      <FAQ />
+      {/* <FAQ /> */}
     </motion.div>
   );
 }

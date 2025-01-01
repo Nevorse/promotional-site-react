@@ -4,7 +4,7 @@ export const navItems = [
     link: "/"
   },
   {
-    title: "Hizmetlerimiz",
+    title: "Tasarımlarımız",
     link: "/services"
   },
   {

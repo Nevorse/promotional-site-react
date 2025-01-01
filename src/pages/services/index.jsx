@@ -40,14 +40,15 @@ export default function Services() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="max-w-[85%] min-h-[90vh] mx-auto mt-12">
+      className="max-w-[85%] min-h-[90vh] mx-auto mt-12"
+    >
       <div className="flex flex-col justify-center">
         <div>
           <h1 className="text-3xl font-bold tracking-wider mb-4 text-center text-[color:var(--color-primary)]">
-            Servislerimiz
+            Tasarımlarımız
           </h1>
           <h5 className="text-center font-medium tracking-wide text-[color:var(--color-primary)]">
-            Hizmetlerimize buradan ulaşabilirsiniz
+            Tasarımlarımıza buradan ulaşabilirsiniz
           </h5>
         </div>
 
@@ -55,7 +56,8 @@ export default function Services() {
           initial="hidden"
           animate="visible"
           variants={containerAnimation}
-          className="flex flex-wrap justify-center gap-8 my-12">
+          className="flex flex-wrap justify-center gap-8 my-12"
+        >
           {services?.map((doc) => (
             <motion.div variants={itemAnimation} key={doc?.id}>
               <Link to={`${doc?.index + "_" + doc?.title}`}>
