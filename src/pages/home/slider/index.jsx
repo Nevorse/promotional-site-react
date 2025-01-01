@@ -48,7 +48,7 @@ export default function HomeSlider() {
           slideIndex={slideIndex}
         />
       ))}
-      <div className="absolute inset-0 top-[40%] w-11/12 mx-auto text-[color:var(--color-secondary] text-4xl font-semibold transition-all">
+      <div className="absolute inset-0 top-[40%] w-11/12 mx-auto text-[color:var(--color-secondary)] text-4xl font-semibold transition-all">
         {sliderTexts[slideIndex]}
       </div>
 

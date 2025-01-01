@@ -6,7 +6,7 @@ export default function FAQ() {
     <div className="w-full pt-16 pb-20 bg-[color:var(--theme-secondary)]">
       <div className="flex flex-col items-center">
         <div className="text-[color:var(--color-primary)] text-center text-3xl font-bold tracking-wider mb-4">
-          FAQ
+          Sık Sorulan Sorular
         </div>
         <div className=" w-36 h-px bg-[color:var(--color-primary)] mb-8" />
       </div>
