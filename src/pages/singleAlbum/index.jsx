@@ -81,13 +81,13 @@ export default function SingleAlbum() {
             </div>
             <div className="mb-8 transition-all">
               <motion.div
-                onClick={() => openModalHandler(document?.data[0])}
+                onClick={() => openModalHandler(document?.data && document?.data[0])}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                style={{ backgroundImage: `url(${document?.data[0]})` }}
+                style={{ backgroundImage: `url(${document?.data && document.data[0]})` }}
                 className="2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh] w-full bg-no-repeat bg-cover bg-center rounded-2xl transition-all shadow-md cursor-pointer">
                 <img
-                  src={document?.data[0]}
+                  src={document?.data && document?.data[0]}
                   className="w-full object-cover invisible"
                 />
               </motion.div>
@@ -129,7 +129,7 @@ export default function SingleAlbum() {
             </div>
           </div>
         </div>
-        {(coll == "projects" && document?.data.length > 1) && (
+        {(coll == "projects" && document?.data?.length > 1) && (
           <div className="flex flex-wrap justify-center mt-10 gap-6">
             {document?.data?.map((e, index) => {
               if (index == 0) return;

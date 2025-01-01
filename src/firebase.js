@@ -146,9 +146,8 @@ export const addData = async (coll, data, title, content, docRef) => {
   const lastData = await getLastData(coll);
   const count = lastData?.index || 0;
   docum["index"] = count + 1;
-
-  if (data) docum["data"] = data;
-  if (title) docum["title"] = title;
+  docum["data"] = data || [];
+  docum["title"] = title || "";
   if (content && coll == "service_albums") docum["content"] = content;
 
   try {
