@@ -148,7 +148,7 @@ export const addData = async (coll, data, title, content, docRef) => {
   docum["index"] = count + 1;
   docum["data"] = data || [];
   docum["title"] = title || "";
-  if (content && coll == "service_albums") docum["content"] = content;
+  docum["content"] = content || "";
 
   try {
     if (docRef) {
@@ -175,11 +175,11 @@ export const updateData = async (
   const docRef = doc(db, coll, id);
   const updateFunction = () => {
     const docum = {};
-    docum["data"] = data;
+    docum["data"] = data || [];
     if (coll == "cover_images") docum["cover_texts"] = coverTexts;
     else {
-      docum["title"] = title;
-      docum["content"] = content;
+      docum["title"] = title || "";
+      docum["content"] = content || "";
     }
 
     try {
