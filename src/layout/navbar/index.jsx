@@ -99,8 +99,9 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
                 key={index}
                 to={item.link}
                 className={
-                  classNames("text-[color:var(--color-primary)] hover:bg-[color:var(--theme-quaternary)] px-4 py-2 rounded-xl transition-colors", {
-                    "text-[color:var(--color-secondary)]": fixedNav
+                  classNames("px-4 py-2 rounded-xl transition-colors", {
+                    "text-[color:var(--color-secondary)] hover:bg-[color:var(--theme-quaternary)]": fixedNav,
+                    "text-[color:var(--color-primary)] hover:bg-[color:var(--theme-secondary)]": !fixedNav
                   })
               }
               >

@@ -6,7 +6,6 @@ import Contact from "../pages/contact";
 import App from "../layout/App";
 import Index from "../pages/admin";
 import Admin from "../pages/admin/Admin";
-import _Upload from "../pages/admin/upload/_Upload";
 import _Collection from "../pages/admin/collection/_Collection";
 import AlbumComp from "../pages/admin/album/AlbumComp";
 import AboutUs from "../pages/aboutus";
@@ -55,10 +54,6 @@ const routes = createBrowserRouter([
       {
         index: true,
         element: <Admin />,
-      },
-      {
-        path: "uploads",
-        element: <_Upload />,
       },
       {
         path: "cover",
