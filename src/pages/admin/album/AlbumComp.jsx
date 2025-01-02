@@ -169,7 +169,7 @@ export default function AlbumComp() {
             </div>
           </div>
         )}
-        {/* {collection == "service_albums" && ( */}
+        {collection != "cover_images" && (
           <div>
             <label htmlFor="content" className="font-semibold text-gray-700 ml-2">
               Albüm İçeriği
@@ -182,7 +182,7 @@ export default function AlbumComp() {
               className="border mt-1 border-slate-400 max-h-[250px] transition-all duration-300 bg-slate-50 p-2 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800"
             />
           </div>
-        {/* )} */}
+        )}
         <_FileInput
           collection={collection}
           docId={docId}

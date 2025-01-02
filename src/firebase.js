@@ -173,6 +173,7 @@ export const updateData = async (
   prevDocImagesCount
 ) => {
   const docRef = doc(db, coll, id);
+
   const updateFunction = () => {
     const docum = {};
     docum["data"] = data || [];
@@ -181,7 +182,7 @@ export const updateData = async (
       docum["title"] = title || "";
       docum["content"] = content || "";
     }
-
+    
     try {
       updateDoc(docRef, docum);
     } catch (err) {

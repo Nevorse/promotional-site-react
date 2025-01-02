@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import classNames from "classnames";
@@ -22,8 +22,10 @@ export default function SingleAlbum() {
   });
   const [allDocuments, setAllDocuments] = useState([]);
   const [document, setDocument] = useState();
+  const [content, setContent] = useState("");
   const [modalImage, setModalImage] = useState();
   const [modalImageIndex, setModalImageIndex] = useState();
+  const textBoxRef = useRef();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,6 +34,11 @@ export default function SingleAlbum() {
     setColl(location.pathname.split("/")[1]);
     getData();
   }, [location]);
+
+  useEffect(() => {
+    let newContent = content.replace(/##(.*?)##/g, "<b>$1</b>");
+    textBoxRef.current.innerHTML = newContent;
+  }, [content]);
 
   const getData = async () => {
     let documentId = false;
@@ -53,6 +60,7 @@ export default function SingleAlbum() {
     for (let i = 0; i < allData.length; i++) {
       if (allData[i].index == docIndex) {
         setDocument(allData[i]);
+        setContent(allData[i]?.content);
         documentId = allData[i].id;
         break;
       }
@@ -73,7 +81,8 @@ export default function SingleAlbum() {
       <motion.div
         initial={{ opacity: 0, translateY: 30 }}
         animate={{ opacity: 1, translateY: 0 }}
-        className="max-w-[90%] min-h-[90vh] mx-auto lg:my-8 my-6">
+        className="max-w-[90%] min-h-[90vh] mx-auto lg:my-8 my-6"
+      >
         <div className="flex flex-col xl:flex-row gap-y-8 gap-x-6">
           <div className="flex flex-col gap-4 xl:w-[80%]">
             <div className="text-[28px] font-semibold tracking-wider">
@@ -84,19 +93,23 @@ export default function SingleAlbum() {
                 onClick={() => openModalHandler(document?.data && document?.data[0])}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                style={{ backgroundImage: `url(${document?.data && document.data[0]})` }}
-                className="2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh] w-full bg-no-repeat bg-cover bg-center rounded-2xl transition-all shadow-md cursor-pointer">
+                style={{
+                  backgroundImage: `url(${document?.data && document.data[0]})`,
+                }}
+                className="2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh] w-full bg-no-repeat bg-cover bg-center rounded-2xl transition-all shadow-md cursor-pointer"
+              >
                 <img
                   src={document?.data && document?.data[0]}
                   className="w-full object-cover invisible"
                 />
               </motion.div>
             </div>
-            {coll == "services" && (
-              <div className="text-lg">
-                <p>{document?.content}</p>
-              </div>
-            )}
+
+            <div className="text-[18px]">
+              <p ref={textBoxRef} className="whitespace-pre-wrap text">
+                {/* {document?.content} */}
+              </p>
+            </div>
           </div>
 
           <div className="grow my-6">
@@ -121,7 +134,8 @@ export default function SingleAlbum() {
                         "bg-neutral-800/90 !text-neutral-200":
                           document?.id == doc?.id,
                       }
-                    )}>
+                    )}
+                  >
                     {doc?.title}
                   </div>
                 </Link>
@@ -129,8 +143,8 @@ export default function SingleAlbum() {
             </div>
           </div>
         </div>
-        {(coll == "projects" && document?.data?.length > 1) && (
-          <div className="flex flex-wrap justify-center mt-10 gap-6">
+        {document?.data?.length > 1 && (
+          <div className="flex flex-wrap justify-center mt-10 gap-3">
             {document?.data?.map((e, index) => {
               if (index == 0) return;
               else
@@ -138,10 +152,11 @@ export default function SingleAlbum() {
                   <div
                     key={index}
                     onClick={() => openModalHandler(e, index)}
-                    className="cursor-pointer max-w-[500px] max-h-[350px] hover:scale-105 transition-transform">
+                    className="cursor-pointer max-w-[500px] max-h-[350px] hover:scale-105 transition-transform"
+                  >
                     <img
                       src={e}
-                      className="w-full h-full object-cover object-center rounded-md shadow-lg hover:shadow-2xl transition-shadow"
+                      className="w-full h-full object-cover object-center rounded-sm shadow-lg hover:shadow-2xl transition-shadow"
                     />
                   </div>
                 );
