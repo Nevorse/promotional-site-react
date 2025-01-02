@@ -22,17 +22,17 @@ export default function Footer() {
 
           <div className="flex gap-3 items-center">
             <IoIosMail className="w-5 h-5" />
-            <p className="text-lg font-medium">mail@mail.com</p>
+            <p className="text-lg font-medium">info@ozgurahsap.com</p>
           </div>
 
           <a
             target="_blank"
-            href="https://instagram.com/ozkartalmarangoz"
+            href="https://instagram.com/ozgurahsapdekorasyon"
             className="hover:text-[color:var(--color-tertiary)] text-[color:var(--color-tertiary)] sm:text-[color:var(--color-secondary)]">
             <div className="flex gap-3 items-center">
               <IoLogoInstagram className="w-5 h-5" />
               <p className="text-lg font-medium underline underline-offset-[6px] ">
-                /ozkartalmarangoz
+                /ozgurahsapdekorasyon
               </p>
             </div>
           </a>

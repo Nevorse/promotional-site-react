@@ -4,12 +4,12 @@ export const navItems = [
     link: "/"
   },
   {
-    title: "Tasarımlarımız",
-    link: "/services"
-  },
-  {
     title: "Projelerimiz",
     link: "/projects"
+  },
+  {
+    title: "Tasarımlarımız",
+    link: "/services"
   },
   {
     title: "Hakkımızda",
