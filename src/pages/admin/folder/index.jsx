@@ -25,8 +25,6 @@ export default function _Folders() {
   const [folderImage, setFolderImage] = useState(projects.find((o) => o.id == folderId)?.data);
   const [collData, setCollData] = useState(projectFolders.find((o) => o.id == folderId)?.data);
 
-  console.log(projectFolders);
-
   useEffect(() => {
     if (!collData) setAllData(collection, folderId);
   }, [folderId]);

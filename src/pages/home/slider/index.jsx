@@ -9,18 +9,18 @@ export default function HomeSlider() {
   const { coverImages } = useSelector((state) => state.collections);
   const [slideImages, setSlideImages] = useState(coverImages[0]?.data);
   const [slideIndex, setSlideIndex] = useState(0);
-  const [sliderTexts, setSliderTexts] = useState(
-    coverImages[0]?.cover_texts || ["", ""]
-  );
+  const [sliderTexts, setSliderTexts] = useState(coverImages[0]?.cover_texts || []);
+  const [slideCount, setSlideCount] = useState(coverImages[0]?.cover_count || 2);
 
   useEffect(() => {
     if (coverImages.length < 1) {
       setAllData("cover_images").then((allData) => {
         setSlideImages(allData[0]?.data);
-        setSliderTexts(allData[0]?.cover_texts || ["", ""]);
+        setSliderTexts(allData[0]?.cover_texts || []);
+        setSlideCount(allData[0]?.cover_count || 2);
       });
     }
-  }, []);
+  }, [coverImages]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -30,7 +30,7 @@ export default function HomeSlider() {
   }, [slideIndex]);
 
   const goToNext = () => {
-    const isLastSlide = slideIndex >= 1;
+    const isLastSlide = slideIndex >= slideCount - 1;
     const newIndex = isLastSlide ? 0 : slideIndex + 1;
     setSlideIndex(newIndex);
   };
@@ -39,7 +39,8 @@ export default function HomeSlider() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="2xl:h-[80vh] xl:h-[70vh] lg:h-[60vh] md:h-[55vh] sm:h-[50vh] h-[45vh] w-full relative flex rounded-t-md overflow-hidden">
+      className="2xl:h-[80vh] xl:h-[70vh] lg:h-[60vh] md:h-[55vh] sm:h-[50vh] h-[45vh] w-full relative flex rounded-t-md overflow-hidden"
+    >
       {slideImages?.map((imgUrl, index) => (
         <SlideComp
           key={index}

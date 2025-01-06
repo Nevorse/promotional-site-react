@@ -110,7 +110,7 @@ export default function _FileInput({
           hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600`,
           )}
         >
-          <div className="flex flex-col items-center justify-center pt-5 pb-3">
+          <div className="flex flex-col items-center justify-center pt-5 pb-3 text-sm text-gray-900 z-10">
             {!folder && (
               <svg
                 className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
@@ -128,11 +128,11 @@ export default function _FileInput({
                 />
               </svg>
             )}
-            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mb-2">
               <span className="font-semibold">Yüklemek için tıkla </span>
               veya sürükle ve bırak
             </p>
-            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 font-semibold">
+            <p className="mb-2 font-semibold">
               {`"${imageFiles?.length}" dosya`}
             </p>
           </div>

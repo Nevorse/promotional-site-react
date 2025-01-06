@@ -26,20 +26,22 @@ export default function AlbumComp() {
     collection != "cover_images" ? location.pathname.split("/")[3] : "cover_doc_id"
   );
   const [coverTexts, setCoverTexts] = useState(() => {
-    if (coll == "cover") return ["", ""];
+    if (coll == "cover") return ["", "", "", "", "", ""];
     else return undefined;
   });
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [docImages, setDocImages] = useState([]);
   const [prevDocImagesCount, setPrevDocImagesCount] = useState(0);
-  const [coverImagesCount, setCoverImagesCount] = useState(0);
-
-  console.log(coverTexts)
+  const [coverImagesCount, setCoverImagesCount] = useState(0);  
 
   useEffect(() => {
     getData();
   }, [docId]);
+  useEffect(() => {
+    if (collection == "cover_images" && docImages.length < coverImagesCount) 
+      setCoverImagesCount(docImages.length);
+  }, [docImages]);
 
   const getData = async () => {
     let documentId = false;
@@ -69,7 +71,8 @@ export default function AlbumComp() {
   const setData = (document) => {
     if (document?.title) setTitle(document.title);
     if (document?.content) setContent(document.content);
-    if (document?.cover_texts) setCoverTexts(document.cover_texts);
+    if (document?.cover_texts)
+      setCoverTexts(document.cover_texts || ["", "", "", "", "", ""]);
     if (document?.cover_count) setCoverImagesCount(document.cover_count);
     if (document?.data) {
       setPrevDocImagesCount(document.data.length);
@@ -189,7 +192,7 @@ export default function AlbumComp() {
                         id="cover"
                         onChange={(e) =>
                           setCoverTexts((prev) => {
-                            let arr = [...prev]
+                            let arr = [...prev];
                             arr.splice(index, 1, e.target.value);
                             return arr;
                           })

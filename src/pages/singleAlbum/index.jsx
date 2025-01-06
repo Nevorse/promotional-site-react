@@ -32,8 +32,6 @@ export default function SingleAlbum() {
   const [modalImageIndex, setModalImageIndex] = useState();
   const textBoxRef = useRef();
 
-  // console.log(allDocuments)
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

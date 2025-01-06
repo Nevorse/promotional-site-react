@@ -74,7 +74,7 @@ export default function _Collection() {
         {collection == "service_albums" && "Hizmetler"}
       </h1>
       <h2 className="font-semibold mb-2">
-        {collection == "project_albums" && "İlk sekiz albüm anasayfada görünür."}
+        {collection == "project_albums" && "İlk 8 albüm anasayfada görünür."}
       </h2>
       <div className="flex gap-5">
         <button
