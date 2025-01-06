@@ -20,7 +20,7 @@ export default function Admin() {
       <Link to={"services"}>
         <div className="flex flex-col items-center justify-center w-[120px] text-center">
           <AiOutlineFolderOpen size={80} />
-          <span>{"Tasarımlar"}</span>
+          <span>{"Hizmetler"}</span>
         </div>
       </Link>
     </div>

@@ -3,12 +3,14 @@ import { getFileName } from "../../../utils/helpers";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../../firebase";
 import toast from "react-hot-toast";
+import classNames from "classnames";
 
 export default function _FileInput({
   collection,
   docId,
   setDocImages,
   handleSaveAlbum,
+  folder,
 }) {
   const [imageFiles, setImageFiles] = useState([]);
   const [progress, setProgress] = useState(0);
@@ -38,21 +40,21 @@ export default function _FileInput({
   }, [counter, trigger]);
 
   const onChangeHandle = (e) => {
+    const acceptedTypes = [
+      "image/png",
+      "image/jpg",
+      "image/jpeg",
+      "image/webp",
+      "image/gif",
+    ];
     const files = e.target.files;
     for (let i = 0; i < files.length; i++) {
-      const acceptedTypes = [
-        "image/png",
-        "image/jpg",
-        "image/jpeg",
-        "image/webp",
-        "image/gif",
-      ];
       if (acceptedTypes.includes(files[i].type)) {
-        setImageFiles((prev) => [...prev, files[i]]);
+        if (!folder) setImageFiles((prev) => [...prev, files[i]]);
+        else if (folder) setImageFiles([files[i]])
       } else {
-        toast.error(files[i].type + " " + "dosya formatı desteklenmiyor")
+        toast.error(files[i].type + " " + "dosya formatı desteklenmiyor");
       }
-
     }
   };
   const handleImageUploads = () => {
@@ -69,8 +71,9 @@ export default function _FileInput({
   const uploadImages = (file, index) => {
     const fileName = getFileName(file);
     const location = docId
-      ? `images/${collection}/${docId}/${fileName}`
+      ? `images/${collection}/${Array.isArray(docId) ? docId.join("/") : docId}/${fileName}`
       : `images/${collection}/${fileName}`;
+      
     const imageRef = ref(storage, location);
     const uploadTask = uploadBytesResumable(imageRef, file);
     uploadTask.on(
@@ -88,7 +91,8 @@ export default function _FileInput({
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setDocImages((prev) => [...prev, downloadURL]);
+          if (!folder) setDocImages((prev) => [...prev, downloadURL]);
+          else if (folder) setDocImages([downloadURL]);
           setCounter((c) => c + 1);
         });
       }
@@ -100,24 +104,30 @@ export default function _FileInput({
       <div className="flex items-center justify-center w-full">
         <label
           htmlFor="dropzone-file"
-          className="relative flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 
+          className={classNames(
+            `relative flex flex-col w-full h-40 items-center justify-center border-2 border-gray-300 
           border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 
-          hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <svg
-              className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 16">
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-              />
-            </svg>
+          hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600`,
+          )}
+        >
+          <div className="flex flex-col items-center justify-center pt-5 pb-3">
+            {!folder && (
+              <svg
+                className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 16"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                />
+              </svg>
+            )}
             <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
               <span className="font-semibold">Yüklemek için tıkla </span>
               veya sürükle ve bırak
@@ -132,7 +142,7 @@ export default function _FileInput({
             ref={inputRef}
             id="dropzone-file"
             type="file"
-            multiple={true}
+            multiple={folder ? false : true}
             accept="image/png, image/jpg, image/jpeg, image/webp, image/gif"
           />
         </label>
@@ -150,8 +160,9 @@ export default function _FileInput({
       <button
         className="bg-slate-400 px-4 py-2 rounded-md text-neutral-50 border border-slate-500 shadow-md
             hover:bg-slate-500/90 hover:text-white transition-colors"
-        onClick={handleImageUploads}>
-        Fotoğrafları Yükle
+        onClick={handleImageUploads}
+      >
+        {folder ? "Fotoğrafı" : "Fotoğrafları"} Yükle
       </button>
     </div>
   );

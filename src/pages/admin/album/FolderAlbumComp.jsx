@@ -8,26 +8,17 @@ import { storage, updateData } from "../../../firebase";
 import toast from "react-hot-toast";
 import { deleteObject, ref } from "firebase/storage";
 
-export default function AlbumComp() {
+export default function FolderAlbumComp() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { projects, services, coverImages } = useSelector(
-    (state) => state.collections
-  );
+  const { projectFolders } = useSelector((state) => state.collections);
   const coll = location.pathname.split("/")[2];
   const [collection, setCollection] = useState(() => {
     if (coll == "projects") return "project_albums";
-    if (coll == "services") return "service_albums";
-    if (coll == "cover") return "cover_images";
     else return "";
   });
-  const [docId, setDocId] = useState(() =>
-    collection != "cover_images" ? location.pathname.split("/")[3] : "cover_doc_id"
-  );
-  const [coverTexts, setCoverTexts] = useState(() => {
-    if (coll == "cover") return ["",""];
-    else return undefined;
-  });
+  const [folderId, setFolderId] = useState(() => location.pathname.split("/")[3]);
+  const [docId, setDocId] = useState(() => location.pathname.split("/")[4]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [docImages, setDocImages] = useState([]);
@@ -40,18 +31,16 @@ export default function AlbumComp() {
   const getData = async () => {
     let documentId = false;
     if (collection == "project_albums") {
-      documentId = findAndSetAlbum(projects);
-    } else if (collection == "service_albums") {
-      documentId = findAndSetAlbum(services);
-    } else if (collection == "cover_images") {
-      documentId = findAndSetAlbum(coverImages);
+      documentId = findAndSetAlbum(
+        projectFolders.find((o) => o.id == folderId)?.data || []
+      );
     }
     if (!documentId) {
-      const allData = await setAllData(collection);
+      const allData = await setAllData(collection, folderId);
       findAndSetAlbum(allData);
     }
   };
-  const findAndSetAlbum = (allData) => {    
+  const findAndSetAlbum = (allData) => {
     let documentId = false;
     for (let i = 0; i < allData.length; i++) {
       if (allData[i].id == docId) {
@@ -65,7 +54,6 @@ export default function AlbumComp() {
   const setData = (document) => {
     if (document?.title) setTitle(document.title);
     if (document?.content) setContent(document.content);
-    if (document?.cover_texts) setCoverTexts(document.cover_texts);
     if (document?.data) {
       setPrevDocImagesCount(document.data.length);
       setDocImages(document.data);
@@ -74,15 +62,14 @@ export default function AlbumComp() {
   const handleSaveAlbum = async (upData) => {
     updateData(
       collection,
-      docId,
+      [folderId, "folder", docId],
       upData || docImages,
       title,
       content,
-      coverTexts,
-      prevDocImagesCount,
-    )
-      .then(() => {
-        setAllData(collection)
+      undefined,
+      prevDocImagesCount
+    ).then(() => {
+        setAllData(collection, folderId)
           .then((allData) => {
             const documentId = findAndSetAlbum(allData);
             if (documentId) toast.success("Albüm Kaydedildi.");
@@ -91,9 +78,9 @@ export default function AlbumComp() {
       })
       .catch((err) => toast.error(err.message));
   };
-  const deleteHandler = (url) => {    
-    const imageName = decodeURI(url.split("%2F")[3].split("?")[0]);
-    const imageRef = ref(storage, `images/${collection}/${docId}/${imageName}`);
+  const deleteHandler = (url) => {
+    const imageName = decodeURI(url.split("%2F")[5].split("?")[0]);
+    const imageRef = ref(storage, `images/${collection}/${folderId}/folder/${docId}/${imageName}`);
     let upData = docImages.filter((e) => e != url);
 
     deleteObject(imageRef)
@@ -129,46 +116,24 @@ export default function AlbumComp() {
     <div className="flex flex-col items-center gap-5 w-[95vw] relative">
       <button
         onClick={prevPage}
-        className="absolute left-[5vw] top-[-34px] bg-indigo-500 text-white border border-indigo-500 rounded-lg px-4 py-1.5 text-[15px] leading-5">
+        className="absolute left-[5vw] top-[-34px] bg-indigo-500 text-white border border-indigo-500 rounded-lg px-4 py-1.5 text-[15px] leading-5"
+      >
         Geri git
       </button>
       <div className="flex flex-col max-w-[500px] w-full gap-5">
-        {collection != "cover_images" ? (
-          <div>
-            <label htmlFor="title" className="font-semibold text-gray-700 ml-2">
-              Albüm Başlığı
-            </label>
-            <input
-              id="title"
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
-              type="text"
-              className="border mt-1 border-slate-400 bg-slate-50 p-2 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800"
-            />
-          </div>
-        ) : (
-          <div>
-            <label className="font-semibold text-gray-700 ml-2">
-              Kapak Yazıları
-            </label>
-            <div className="grid gap-y-2">
-              <input
-                id="cover"
-                onChange={(e) => setCoverTexts((prev) => [e.target.value, prev[1]])}
-                value={coverTexts[0]}
-                type="text"
-                className="border mt-1 border-slate-400 bg-slate-50 p-2 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800"
-              />
-              <input
-                id="title"
-                onChange={(e) => setCoverTexts((prev) => [prev[0], e.target.value])}
-                value={coverTexts[1]}
-                type="text"
-                className="border mt-1 border-slate-400 bg-slate-50 p-2 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800"
-              />
-            </div>
-          </div>
-        )}
+        <div>
+          <label htmlFor="title" className="font-semibold text-gray-700 ml-2">
+            Albüm Başlığı
+          </label>
+          <input
+            id="title"
+            onChange={(e) => setTitle(e.target.value)}
+            value={title}
+            type="text"
+            className="border mt-1 border-slate-400 bg-slate-50 p-2 w-full rounded-lg shadow-md focus:outline-slate-500 text-neutral-800"
+          />
+        </div>
+
         {collection != "cover_images" && (
           <div>
             <label htmlFor="content" className="font-semibold text-gray-700 ml-2">
@@ -185,7 +150,7 @@ export default function AlbumComp() {
         )}
         <_FileInput
           collection={collection}
-          docId={docId}
+          docId={[folderId, "folder", docId]}
           setDocImages={setDocImages}
           handleSaveAlbum={handleSaveAlbum}
         />
@@ -194,7 +159,8 @@ export default function AlbumComp() {
       <button
         className=" bg-lime-600 px-4 py-2 rounded-md text-neutral-50 border border-lime-600 shadow-md
               hover:bg-lime-500/90 hover:text-white transition-colors"
-        onClick={() => handleSaveAlbum()}>
+        onClick={() => handleSaveAlbum()}
+      >
         Kaydet
       </button>
 

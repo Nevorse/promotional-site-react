@@ -83,19 +83,28 @@ export const getDocumentCount = async (coll) => {
   const snapshot = await getCountFromServer(q);
   return snapshot?.data()?.count;
 };
-export const getLastData = async (coll) => {
-  const q = query(collection(db, coll), orderBy("index", "desc"), limit(1));
+export const getLastData = async (coll, folderId) => {
+  let collRef;
+  if (folderId) collRef = collection(db, coll, folderId, "folder");
+  else collRef = collection(db, coll);
+
+  const q = query(collRef, orderBy("index", "desc"), limit(1));
   const snapshot = await getDocs(q);
   return snapshot?.docs[0]?.data();
 };
 /* -----------Database----------- */
-export const getAllData = async (coll, lim) => {
+export const getAllData = async (coll, folderId, lim) => {
   if (coll) {
-    const params = [collection(db, coll), orderBy("index", "desc")];
+    let collRef;
+    if (folderId) collRef = collection(db, coll, folderId, "folder");
+    else collRef = collection(db, coll);
+
+    const params = [collRef, orderBy("index", "desc")];
     if (lim) params.push(limit(lim));
-    const q = query(...params);
+    const que = query(...params);
+
     try {
-      const querySnapshot = await getDocs(q);
+      const querySnapshot = await getDocs(que);
       let allData = [];
       querySnapshot.forEach((doc) => {
         const docData = doc.data();
@@ -108,12 +117,14 @@ export const getAllData = async (coll, lim) => {
     }
   } else return [];
 };
-export const updateAllDataAlignment = async (coll, data) => {
+export const updateAllDataAlignment = async (coll, data, folderId) => {
   const dataArr = [...data];
   const revArr = dataArr.reverse();
 
   for (let i = 0; i < revArr.length; i++) {
-    const docRef = doc(db, coll, revArr[i].id);
+    const docRef = folderId 
+    ? doc(db, coll, folderId, "folder", revArr[i].id) 
+    : doc(db, coll, revArr[i].id);
     const upData = {
       index: i,
     };
@@ -125,7 +136,7 @@ export const updateAllDataAlignment = async (coll, data) => {
   }
 };
 export const getSingleData = async (coll, id) => {
-  const docRef = doc(db, coll, id);
+  const docRef = typeof id == "string" ? doc(db, coll, id) : doc(db, coll, ...id);
   try {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -141,22 +152,24 @@ export const getSingleData = async (coll, id) => {
   }
 };
 /***/
-export const addData = async (coll, data, title, content, docRef) => {
+export const addData = async (coll, data, title, content, folderId, docRef) => {
   let docum = {};
-  const lastData = await getLastData(coll);
-  const count = lastData?.index || 0;
-  docum["index"] = count + 1;
+  const lastData = await getLastData(coll, folderId);
+  const lastIndex = lastData?.index + 1 || 0;  
+  docum["index"] = lastIndex;
   docum["data"] = data || [];
   docum["title"] = title || "";
-  docum["content"] = content || "";
+  if (content) docum["content"] = content || "";
 
   try {
     if (docRef) {
       const response = await setDoc(docRef, docum);
       return response;
     } else {
-      const q = collection(db, coll);
-      const response = await addDoc(q, docum);
+      const collRef = folderId
+        ? collection(db, coll, folderId, "folder")
+        : collection(db, coll);
+      const response = await addDoc(collRef, docum);
       return response;
     }
   } catch (err) {
@@ -172,34 +185,38 @@ export const updateData = async (
   coverTexts,
   prevDocImagesCount
 ) => {
-  const docRef = doc(db, coll, id);
-
+  const docRef = typeof id == "string" ? doc(db, coll, id) : doc(db, coll, ...id);
   const updateFunction = () => {
     const docum = {};
     docum["data"] = data || [];
+    if (title) docum["title"] = title || "";
+    if (content) docum["content"] = content || "";
     if (coll == "cover_images") docum["cover_texts"] = coverTexts;
-    else {
-      docum["title"] = title || "";
-      docum["content"] = content || "";
-    }
-    
+
     try {
       updateDoc(docRef, docum);
     } catch (err) {
       toast.error(err.message);
     }
   };
+
   if (prevDocImagesCount < 1) {
     const docCheck = await getSingleData(coll, id);
     if (docCheck) updateFunction();
-    else if (!docCheck) addData(coll, data, title, content, docRef);
+    else if (!docCheck) addData(coll, data, title, content, undefined, docRef);
   } else {
     updateFunction();
   }
 };
 export const deleteDocument = async (coll, id) => {
-  const docRef = doc(db, coll, id);
-  const imagesRef = ref(storage, `/images/${coll}/${id}`);
+  let folderId;
+
+  if (typeof id != "string") folderId = id[0];
+
+  const docRef = folderId ? doc(db, coll, ...id) : doc(db, coll, id);
+  const imagesRef = folderId 
+  ? ref(storage, `/images/${coll}/${id.join("/")}`)
+  : ref(storage, `/images/${coll}/${id}`);
 
   listAll(imagesRef)
     .then((response) => {
@@ -211,7 +228,8 @@ export const deleteDocument = async (coll, id) => {
       deleteDoc(docRef)
         .then(() => {
           toast.success("Albüm silindi.");
-          setAllData(coll);
+          if (folderId) setAllData(coll, folderId);
+          else setAllData(coll);
         })
         .catch((err) => toast.error(err.code));
     })

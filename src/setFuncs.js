@@ -3,15 +3,24 @@ import store from "./store";
 import {
   setAllCoverImagesDataHandler,
   setAllProjectsDataHandler,
+  setAllProjectFoldersDataHandler,
   setAllServicesDataHandler,
 } from "./store/collections";
 
-export const setAllData = async (coll, limit) => {
-  const allData = await getAllData(coll, limit);
-
-  if (coll == "project_albums") store.dispatch(setAllProjectsDataHandler(allData));
-  else if (coll == "service_albums") store.dispatch(setAllServicesDataHandler(allData));
-  else if (coll == "cover_images") store.dispatch(setAllCoverImagesDataHandler(allData));
+export const setAllData = async (coll, folderId, limit) => {
+  const allData = await getAllData(coll, folderId, limit);
   
-  return allData;
+  if (!folderId) {
+    if (coll == "project_albums") store.dispatch(setAllProjectsDataHandler(allData));
+    else if (coll == "service_albums") store.dispatch(setAllServicesDataHandler(allData));
+    else if (coll == "cover_images") store.dispatch(setAllCoverImagesDataHandler(allData));
+  } else if (folderId) {
+    if (coll == "project_albums") store.dispatch(setAllProjectFoldersDataHandler(
+      {
+        id: folderId, 
+        data: allData
+      }
+    ));
+  }
+  return allData;  
 };

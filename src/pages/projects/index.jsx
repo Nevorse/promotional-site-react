@@ -5,14 +5,13 @@ import { setAllData } from "../../setFuncs";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-
-export default function OurProjects() {
+export default function Projects() {
   const { projects } = useSelector((state) => state.collections);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   useEffect(() => {
     if (projects.length == 0) {
       setAllData("project_albums");
@@ -38,10 +37,11 @@ export default function OurProjects() {
   };
 
   return (
-    <motion.div 
-    initial={{opacity: 0}}
-    animate={{opacity: 1}}
-    className="max-w-[85%] min-h-[90vh] mx-auto mt-12">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="max-w-[85%] min-h-[90vh] mx-auto mt-12"
+    >
       <div className="flex flex-col justify-center">
         <div>
           <h1 className="text-3xl font-bold tracking-wider mb-4 text-center text-[color:var(--color-primary)]">
@@ -53,14 +53,16 @@ export default function OurProjects() {
         </div>
 
         <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={containerAnimation} className="flex flex-wrap justify-center gap-x-8 gap-y-9 my-12">
+          initial="hidden"
+          animate="visible"
+          variants={containerAnimation}
+          className="flex flex-wrap justify-center gap-x-8 gap-y-9 my-12"
+        >
           {projects?.map((doc) => (
             <motion.div variants={itemAnimation} key={doc.id}>
-            <Link to={`${doc?.index + "_" + doc?.title}`}>
-              <CardComp doc={doc} type={2} />
-            </Link>
+              <Link to={`${doc?.id}`}>
+                <CardComp doc={doc} type={2} />
+              </Link>
             </motion.div>
           ))}
         </motion.div>

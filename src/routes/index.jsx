@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/home";
 import Services from "../pages/services";
-import OurProjects from "../pages/ourProjects";
+import Projects from "../pages/projects";
 import Contact from "../pages/contact";
 import App from "../layout/App";
 import Index from "../pages/admin";
@@ -11,6 +11,9 @@ import AlbumComp from "../pages/admin/album/AlbumComp";
 import AboutUs from "../pages/aboutus";
 import SingleAlbum from "../pages/singleAlbum";
 import NotFound from "../pages/notFound";
+import _Folder from "../pages/admin/folder";
+import FolderAlbumComp from "../pages/admin/album/FolderAlbumComp";
+import Folder from "../pages/folder";
 
 const routes = createBrowserRouter([
   {
@@ -27,14 +30,18 @@ const routes = createBrowserRouter([
       },
       {
         path: "/projects",
-        element: <OurProjects />,
+        element: <Projects />,
       },
       {
         path: "/services/:album",
         element: <SingleAlbum />,
       },
       {
-        path: "/projects/:album",
+        path: "/projects/:id",
+        element: <Folder />,
+      },
+      {
+        path: "/projects/:folder/:album",
         element: <SingleAlbum />,
       },
       {
@@ -60,19 +67,23 @@ const routes = createBrowserRouter([
         element: <AlbumComp />,
       },
       {
-        path: "services",
-        element: <_Collection />,
-      },
-      {
         path: "projects",
         element: <_Collection />,
       },
       {
-        path: "services/:id",
-        element: <AlbumComp />,
+        path: "projects/:id",
+        element: <_Folder />,
       },
       {
-        path: "projects/:id",
+        path:"projects/:id/:id",
+        element:<FolderAlbumComp/>
+      },
+      {
+        path: "services",
+        element: <_Collection />,
+      },
+      {
+        path: "services/:id",
         element: <AlbumComp />,
       },
     ],

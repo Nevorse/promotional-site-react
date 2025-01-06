@@ -25,9 +25,8 @@ export default function CardComp({ type = 1, doc }) {
           {doc?.title}
         </h5>
 
-        {/* ?????????? */}
         <p className="text-[15px] px-4 text-center py-1 text-[color:var(--color-primary)] truncate">
-          {doc?.content && doc?.content}
+          {/* {doc?.content && doc?.content} */}
         </p>
       </div>
     </div>

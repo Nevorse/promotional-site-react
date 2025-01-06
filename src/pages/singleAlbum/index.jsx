@@ -36,7 +36,8 @@ export default function SingleAlbum() {
   }, [location]);
 
   useEffect(() => {
-    let newContent = content.replace(/##(.*?)##/g, "<b>$1</b>");
+    let newContent = "";
+    if (content) newContent = content?.replace(/##(.*?)##/g, "<b>$1</b>");
     textBoxRef.current.innerHTML = newContent;
   }, [content]);
 
@@ -96,7 +97,7 @@ export default function SingleAlbum() {
                 style={{
                   backgroundImage: `url(${document?.data && document.data[0]})`,
                 }}
-                className="2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh] w-full bg-no-repeat bg-cover bg-center rounded-2xl transition-all shadow-md cursor-pointer"
+                className="2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh] w-full bg-no-repeat bg-cover bg-center rounded-lg transition-all shadow-md cursor-pointer"
               >
                 <img
                   src={document?.data && document?.data[0]}
@@ -112,8 +113,8 @@ export default function SingleAlbum() {
             </div>
           </div>
 
-          <div className="grow my-6">
-            <div className="w-full mb-5">
+          <div className="grow mb-6 mt-[58px]">
+            {/* <div className="w-full mb-5">
               <h1 className="text-xl tracking-wide mb-2">
                 {coll == "services" ? "Hizmetlerimiz" : "Projelerimiz"}
               </h1>
@@ -122,12 +123,16 @@ export default function SingleAlbum() {
                   ? "Verdiğimiz hizmetlere aşağıdan ulaşabilirsiniz"
                   : "Projelerimize aşağıdan ulaşabilirsiniz"}
               </span>
-            </div>
+            </div> */}
 
-            <div className="w-full flex flex-col gap-y-1">
+            <div 
+            style={{ scrollbarWidth: "none" }}
+            className="w-full flex flex-col gap-y-1 overflow-y-scroll rounded-md
+            2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh]">
               {allDocuments?.map((doc) => (
                 <Link key={doc?.id} to={`/${coll}/${doc?.index + "_" + doc?.title}`}>
                   <div
+                    id={document?.id == doc?.id && ""}
                     className={classNames(
                       "px-4 py-3 transition-all bg-neutral-100 text-neutral-800 hover:bg-neutral-800 hover:text-neutral-200",
                       {

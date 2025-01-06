@@ -17,7 +17,7 @@ export default function HomeProjects() {
       <div className="flex gap-x-16 gap-y-10 w-full justify-center flex-wrap">
         {projects?.map(
           (doc, index) =>
-            index < 6 && (
+            index < 8 && (
               <Link key={doc.id} to={`/projects/${doc?.index + "_" + doc?.title}`}>
                 <CardComp doc={doc} />
               </Link>
