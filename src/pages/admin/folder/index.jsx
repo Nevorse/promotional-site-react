@@ -43,9 +43,6 @@ export default function _Folders() {
   }, [projects]);
 
   const createAlbum = async () => {
-
-    console.log(collData?.length)
-
     const response = await addData(
       collection,
       undefined,

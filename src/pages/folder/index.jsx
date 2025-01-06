@@ -27,12 +27,12 @@ export default function Folder() {
   }, [folderId]);
 
   useEffect(() => {
-    if (collection == "projects_albums")
+    if (collection == "project_albums")
       setCollData(projectFolders.find((o) => o.id == folderId)?.data);
   }, [projectFolders]);
 
   useEffect(() => {
-    const obj = projects.find(o => o.id == folderId)
+    const obj = projects.find(o => o.id == folderId);
     if (obj?.title) setFolderTitle(obj?.title);
     if (obj?.data.length) setFolderImage(obj?.data);
   }, [projects]);

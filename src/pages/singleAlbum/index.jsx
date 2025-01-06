@@ -10,7 +10,7 @@ import store from "../../store";
 import toast from "react-hot-toast";
 
 export default function SingleAlbum() {
-  const { projects, services } = useSelector((state) => state.collections);
+  const { services, projectFolders } = useSelector((state) => state.collections);
   const { modal } = useSelector((state) => state.modal);
   const location = useLocation();
   const [coll, setColl] = useState(location.pathname.split("/")[1]);
@@ -20,12 +20,19 @@ export default function SingleAlbum() {
     if (path == "services") return "service_albums";
     else return "";
   });
+  const [folderId, setFolderId] = useState(() => {
+    const paths = location.pathname.split("/");
+    if (paths[1] == "projects") return paths[2];
+    else return undefined;
+  });
   const [allDocuments, setAllDocuments] = useState([]);
   const [document, setDocument] = useState();
   const [content, setContent] = useState("");
   const [modalImage, setModalImage] = useState();
   const [modalImageIndex, setModalImageIndex] = useState();
   const textBoxRef = useRef();
+
+  // console.log(allDocuments)
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,7 +41,6 @@ export default function SingleAlbum() {
     setColl(location.pathname.split("/")[1]);
     getData();
   }, [location]);
-
   useEffect(() => {
     let newContent = "";
     if (content) newContent = content?.replace(/##(.*?)##/g, "<b>$1</b>");
@@ -43,22 +49,28 @@ export default function SingleAlbum() {
 
   const getData = async () => {
     let documentId = false;
-    if (collection == "project_albums") {
-      documentId = findAndSetAlbum(projects);
-    } else if (collection == "service_albums") {
+    if (collection == "service_albums") {
       documentId = findAndSetAlbum(services);
+    } else if (collection == "project_albums") {
+      documentId = findAndSetAlbum(
+        projectFolders.find((o) => o.id == folderId)?.data
+      );
     }
     if (!documentId) {
-      const allData = await setAllData(collection);
+      const allData = await setAllData(collection, folderId);
       const docCheck = findAndSetAlbum(allData);
       if (!docCheck) toast.error("Doküman bulunamadı!");
     }
   };
   const findAndSetAlbum = (allData) => {
-    const docIndex = location.pathname.split("/")[2].split("_")[0];
+    const docIndex = folderId
+      ? location.pathname.split("/")[3].split("_")[0]
+      : location.pathname.split("/")[2].split("_")[0];
     let documentId = false;
+    // let revArr = [...allData];
+    // revArr = revArr.reverse();
     setAllDocuments(allData);
-    for (let i = 0; i < allData.length; i++) {
+    for (let i = 0; i < allData?.length; i++) {
       if (allData[i].index == docIndex) {
         setDocument(allData[i]);
         setContent(allData[i]?.content);
@@ -82,7 +94,7 @@ export default function SingleAlbum() {
       <motion.div
         initial={{ opacity: 0, translateY: 30 }}
         animate={{ opacity: 1, translateY: 0 }}
-        className="max-w-[90%] min-h-[90vh] mx-auto lg:my-8 my-6"
+        className="max-w-[92%] min-h-[90vh] mx-auto lg:my-8 my-6"
       >
         <div className="flex flex-col xl:flex-row gap-y-8 gap-x-6">
           <div className="flex flex-col gap-4 xl:w-[80%]">
@@ -125,14 +137,21 @@ export default function SingleAlbum() {
               </span>
             </div> */}
 
-            <div 
-            style={{ scrollbarWidth: "none" }}
-            className="w-full flex flex-col gap-y-1 overflow-y-scroll rounded-md
-            2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh]">
+            <div
+              style={{ scrollbarWidth: "none" }}
+              className="w-full flex flex-col gap-y-1 overflow-y-scroll rounded-md
+              2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh]"
+            >
               {allDocuments?.map((doc) => (
-                <Link key={doc?.id} to={`/${coll}/${doc?.index + "_" + doc?.title}`}>
+                <Link
+                  key={doc?.id}
+                  to={
+                    folderId
+                      ? `/${coll}/${folderId}/${doc?.index + "_" + doc?.title}`
+                      : `/${coll}/${doc?.index + "_" + doc?.title}`
+                  }
+                >
                   <div
-                    id={document?.id == doc?.id && ""}
                     className={classNames(
                       "px-4 py-3 transition-all bg-neutral-100 text-neutral-800 hover:bg-neutral-800 hover:text-neutral-200",
                       {
@@ -148,6 +167,9 @@ export default function SingleAlbum() {
             </div>
           </div>
         </div>
+
+
+        
         {document?.data?.length > 1 && (
           <div className="flex flex-wrap justify-center mt-10 gap-3">
             {document?.data?.map((e, index) => {

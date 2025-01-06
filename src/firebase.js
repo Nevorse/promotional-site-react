@@ -183,7 +183,8 @@ export const updateData = async (
   title,
   content,
   coverTexts,
-  prevDocImagesCount
+  prevDocImagesCount,
+  coverCount
 ) => {
   const docRef = typeof id == "string" ? doc(db, coll, id) : doc(db, coll, ...id);
   const updateFunction = () => {
@@ -191,7 +192,10 @@ export const updateData = async (
     docum["data"] = data || [];
     if (title) docum["title"] = title || "";
     if (content) docum["content"] = content || "";
-    if (coll == "cover_images") docum["cover_texts"] = coverTexts;
+    if (coll == "cover_images") {
+      docum["cover_texts"] = coverTexts;
+      docum["cover_count"] = coverCount;
+    }
 
     try {
       updateDoc(docRef, docum);

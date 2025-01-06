@@ -3,14 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import classNames from "classnames";
 import { setAllData } from "../../setFuncs";
-import { AnimatePresence, motion, useTransform, useScroll } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Modal from "../../components/Modal";
 import { setModal } from "../../store/modal";
 import store from "../../store";
 import toast from "react-hot-toast";
 
 export default function SingleAlbum() {
-  const { projects, projectFolders } = useSelector((state) => state.collections);
+  const { services, projectFolders } = useSelector((state) => state.collections);
   const { modal } = useSelector((state) => state.modal);
   const location = useLocation();
   const [coll, setColl] = useState(location.pathname.split("/")[1]);
@@ -22,7 +22,7 @@ export default function SingleAlbum() {
   });
   const [folderId, setFolderId] = useState(() => {
     const paths = location.pathname.split("/");
-    if (paths[1] == "services") return paths[2];
+    if (paths[1] == "projects") return paths[2];
     else return undefined;
   });
   const [allDocuments, setAllDocuments] = useState([]);
@@ -44,7 +44,6 @@ export default function SingleAlbum() {
     setColl(location.pathname.split("/")[1]);
     getData();
   }, [location]);
-
   useEffect(() => {
     let newContent = "";
     if (content) newContent = content?.replace(/##(.*?)##/g, "<b>$1</b>");
@@ -55,9 +54,9 @@ export default function SingleAlbum() {
 
   const getData = async () => {
     let documentId = false;
-    if (collection == "project_albums") {
-      documentId = findAndSetAlbum(projects);
-    } else if (collection == "service_albums") {
+    if (collection == "service_albums") {
+      documentId = findAndSetAlbum(services);
+    } else if (collection == "project_albums") {
       documentId = findAndSetAlbum(
         projectFolders.find((o) => o.id == folderId)?.data
       );
@@ -138,7 +137,7 @@ export default function SingleAlbum() {
 
         <div className="flex flex-col 2xl:flex-row gap-y-8 gap-x-6"
         >
-          <div className="h-full flex flex-col gap-4 2xl:w-[80%]
+          <div className="flex flex-col gap-4 2xl:w-[80%]
           2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh]">
             <div className="h-full mb-8 transition-all">
               <motion.div
