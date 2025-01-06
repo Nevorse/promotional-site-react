@@ -64,7 +64,7 @@ export default function Footer() {
             <Link to={"/projects"}>Projelerimiz</Link>
           </div>
           <div className="flex hover:text-[color:var(--color-tertiary)] gap-3 items-center">
-            <Link to={"/services"}>Tasarımlarımız</Link>
+            <Link to={"/services"}>Hizmetlerimiz</Link>
           </div>
           <div className="flex hover:text-[color:var(--color-tertiary)] gap-3 items-center">
             <Link to={"/aboutus"}>Hakkımızda</Link>
