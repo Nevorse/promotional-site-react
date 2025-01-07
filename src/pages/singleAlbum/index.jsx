@@ -122,7 +122,7 @@ export default function SingleAlbum() {
         className="max-w-[92%] min-h-[90vh] mx-auto lg:my-8 my-6"
       >
         <div className="flex flex-col xl:flex-row gap-y-8 gap-x-6">
-          <div className="flex flex-col gap-4 xl:w-[80%]">
+          <div className="flex flex-1 flex-col gap-4 xl:w-[80%]">
             <div className="text-[28px] font-semibold tracking-wider">
               <h1>{document?.title}</h1>
             </div>
@@ -150,7 +150,7 @@ export default function SingleAlbum() {
             </div>
           </div>
 
-          <div className="grow mb-6 mt-[58px]">
+          <div className="mb-6 flex-1 mt-[58px] max-w-[320px]">
             {/* <div className="w-full mb-5">
               <h1 className="text-xl tracking-wide mb-2">
                 {coll == "services" ? "Hizmetlerimiz" : "Projelerimiz"}
@@ -164,9 +164,11 @@ export default function SingleAlbum() {
 
             <div
               ref={sliderRef}
-              style={{ scrollbarWidth: "none" }}
+              // style={{ scrollbarWidth: "none" }}
               className="w-full flex flex-col gap-y-1 overflow-y-scroll rounded-md
-              2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh]"
+              2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh]
+              scrollbar scrollbar-thumb-[color:var(--theme-tertiary)]
+              "
             >
               {allDocuments?.map((doc, index) => (
                 <Link
@@ -182,7 +184,7 @@ export default function SingleAlbum() {
                 >
                   <div
                     className={classNames(
-                      "px-4 py-3 transition-all bg-neutral-100 text-neutral-800 hover:bg-neutral-800 hover:text-neutral-200",
+                      "px-4 py-3 max-h-12 truncate transition-all bg-neutral-100 text-neutral-800 hover:bg-neutral-800 hover:text-neutral-200",
                       {
                         "bg-neutral-800/90 !text-neutral-200":
                           document?.id == doc?.id,
