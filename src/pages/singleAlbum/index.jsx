@@ -167,8 +167,7 @@ export default function SingleAlbum() {
               // style={{ scrollbarWidth: "none" }}
               className="w-full flex flex-col gap-y-1 overflow-y-scroll rounded-md
               2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh]
-              scrollbar scrollbar-thumb-[color:var(--theme-tertiary)]
-              "
+              scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[color:var(--theme-tertiary)]"
             >
               {allDocuments?.map((doc, index) => (
                 <Link
