@@ -25,6 +25,11 @@ export default function SingleAlbum() {
     if (paths[1] == "projects") return paths[2];
     else return undefined;
   });
+  const [docIndex, setDocIndex] = useState(
+    folderId
+      ? Number(location.pathname.split("/")[3].split("_")[0])
+      : Number(location.pathname.split("/")[2].split("_")[0])
+  );
   const [allDocuments, setAllDocuments] = useState([]);
   const [document, setDocument] = useState();
   const [content, setContent] = useState("");
@@ -34,8 +39,11 @@ export default function SingleAlbum() {
   const sliderRef = useRef();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
+    // window.scrollTo({ top: 0, behavior: "smooth" });
+    if (allDocuments.length > 0) {
+      scrollInto();
+    }
+  }, [allDocuments]);
   useEffect(() => {
     setColl(location.pathname.split("/")[1]);
     getData();
@@ -62,7 +70,7 @@ export default function SingleAlbum() {
     }
   };
   const findAndSetAlbum = (allData) => {
-    const docIndex = folderId
+    const index = folderId
       ? location.pathname.split("/")[3].split("_")[0]
       : location.pathname.split("/")[2].split("_")[0];
     let documentId = false;
@@ -70,7 +78,7 @@ export default function SingleAlbum() {
     // revArr = revArr.reverse();
     setAllDocuments(allData);
     for (let i = 0; i < allData?.length; i++) {
-      if (allData[i].index == docIndex) {
+      if (allData[i].index == index) {
         setDocument(allData[i]);
         setContent(allData[i]?.content);
         documentId = allData[i].id;
@@ -84,23 +92,23 @@ export default function SingleAlbum() {
     setModalImageIndex(index);
     store.dispatch(setModal({ coll: coll, data: document?.data }));
   };
-  const scrollInto = () => {
+  const scrollInto = (e) => {
     let index;
+    let id = e?.target.parentElement.id || docIndex;
     allDocuments.find((o, i) => {
-      if (o.index == document.index) {
+      if (o.index == id) {
         index = i;
         return o;
       }
     });
-
     if (sliderRef?.current?.children[index]) {
       sliderRef?.current?.children[index]?.scrollIntoView({
         behavior: "smooth",
         block: "center",
         inline: "start",
       });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
