@@ -40,7 +40,7 @@ export default function SingleAlbum() {
 
   useEffect(() => {
     // window.scrollTo({ top: 0, behavior: "smooth" });
-    if (allDocuments.length > 0) {
+    if (allDocuments?.length > 0) {
       scrollInto();
     }
   }, [allDocuments]);
