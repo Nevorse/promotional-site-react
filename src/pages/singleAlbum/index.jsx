@@ -34,26 +34,8 @@ export default function SingleAlbum() {
   const sliderRef = useRef();
 
   useEffect(() => {
-    let index;
-    allDocuments.find((o, i) => {
-      if (o.index == document.index) {
-        index = i;
-        return o;
-      }
-    });
-
-    if (sliderRef?.current?.children[index]) {
-      sliderRef?.current?.children[index]?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "start",
-      });
-    }
-    window.scrollTo({top: 0, behavior: 'smooth'});
-  });
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, []);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   useEffect(() => {
     setColl(location.pathname.split("/")[1]);
     getData();
@@ -101,6 +83,24 @@ export default function SingleAlbum() {
     setModalImage(img);
     setModalImageIndex(index);
     store.dispatch(setModal({ coll: coll, data: document?.data }));
+  };
+  const scrollInto = () => {
+    let index;
+    allDocuments.find((o, i) => {
+      if (o.index == document.index) {
+        index = i;
+        return o;
+      }
+    });
+
+    if (sliderRef?.current?.children[index]) {
+      sliderRef?.current?.children[index]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "start",
+      });
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -162,6 +162,7 @@ export default function SingleAlbum() {
             >
               {allDocuments?.map((doc, index) => (
                 <Link
+                  onClick={scrollInto}
                   className={classNames({ selected: document?.id == doc?.id })}
                   id={doc?.index}
                   key={index + "-" + doc?.id}
