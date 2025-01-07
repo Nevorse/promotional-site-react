@@ -68,7 +68,7 @@ export default function CardSlider() {
               style={{ backgroundImage: `url(${doc?.data[0]})` }}
               className="w-full h-[220px] bg-center bg-cover bg-transparent mb-4 transition-all hover:shadow-xl"
             />
-            <h5 className="text-xl font-bold mb-3">{doc?.title}</h5>
+            <h5 className="text-xl font-bold mb-3 max-w-[330px] truncate">{doc?.title}</h5>
             {/* <p className="text-[15px] text-center leading-5 max-h-20 text-gray-600 text-ellipsis overflow-hidden">
               {doc?.content}
             </p> */}
