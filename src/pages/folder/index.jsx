@@ -19,7 +19,7 @@ export default function Folder() {
   const [collData, setCollData] = useState(projectFolders.find((o) => o.id == folderId)?.data);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({top: 0, behavior: 'smooth'});
   }, []);
 
   useEffect(() => {

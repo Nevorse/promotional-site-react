@@ -11,7 +11,7 @@ export default function Home() {
   const { projects, services } = useSelector((state) => state.collections);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({top: 0, behavior: 'smooth'});
   }, []);
   useEffect(() => {
     if (projects.length == 0 || services.length == 0) {

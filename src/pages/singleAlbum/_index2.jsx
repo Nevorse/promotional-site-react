@@ -38,7 +38,7 @@ export default function SingleAlbum() {
   // });
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({top: 0, behavior: 'smooth'});
   }, []);
   useEffect(() => {
     setColl(location.pathname.split("/")[1]);

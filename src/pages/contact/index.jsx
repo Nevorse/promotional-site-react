@@ -9,7 +9,7 @@ import useWindowSize from "../../hooks/useWindowSize";
 export default function Contact() {
   const windowSize = useWindowSize();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({top: 0, behavior: 'smooth'});
   }, []);
 
   const containerAnimation = {

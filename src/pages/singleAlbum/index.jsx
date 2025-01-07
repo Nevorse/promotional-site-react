@@ -31,10 +31,29 @@ export default function SingleAlbum() {
   const [modalImage, setModalImage] = useState();
   const [modalImageIndex, setModalImageIndex] = useState();
   const textBoxRef = useRef();
+  const sliderRef = useRef();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    let index;
+    allDocuments.find((o, i) => {
+      if (o.index == document.index) {
+        index = i;
+        return o;
+      }
+    });
+
+    if (sliderRef?.current?.children[index]) {
+      sliderRef?.current?.children[index]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "start",
+      });
+    }
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
   useEffect(() => {
     setColl(location.pathname.split("/")[1]);
     getData();
@@ -136,13 +155,16 @@ export default function SingleAlbum() {
             </div> */}
 
             <div
+              ref={sliderRef}
               style={{ scrollbarWidth: "none" }}
               className="w-full flex flex-col gap-y-1 overflow-y-scroll rounded-md
               2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh]"
             >
-              {allDocuments?.map((doc) => (
+              {allDocuments?.map((doc, index) => (
                 <Link
-                  key={doc?.id}
+                  className={classNames({ selected: document?.id == doc?.id })}
+                  id={doc?.index}
+                  key={index + "-" + doc?.id}
                   to={
                     folderId
                       ? `/${coll}/${folderId}/${doc?.index + "_" + doc?.title}`
@@ -166,8 +188,6 @@ export default function SingleAlbum() {
           </div>
         </div>
 
-
-        
         {document?.data?.length > 1 && (
           <div className="flex flex-wrap justify-center mt-10 gap-3">
             {document?.data?.map((e, index) => {
