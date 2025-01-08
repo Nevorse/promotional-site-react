@@ -3,22 +3,25 @@
 @tailwind utilities;
 
 * {
-  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
+  font-family: "Marcellus", serif;
 }
 
 @layer base {
   :root {
-    --theme-primary: #ced4da;
-    --theme-secondary: #adb5bd;
-    --theme-tertiary: #6c757d;
-    --theme-quaternary: #495057;
+    --theme-primary: #d5d2cd;
+    --theme-secondary: #d5d2cd;
+    --theme-tertiary: #9c8b7e;
+    --theme-quaternary: #352d28;
 
-    --color-primary: rgb(31, 41, 55);
-    --color-secondary: rgb(243, 244, 246);
-    --color-tertiary: rgb(74, 222, 128);
+    --color-primary: #352d28;
+    --color-secondary: #e1dfd9;
+    --color-tertiary: #209d50;
+    /* --color-primary: #1d231c; */
   }
 }
+
 
 /* Koyu Beton
 --theme-primary: #ced4da;
@@ -31,3 +34,7 @@
 --theme-secondary: #D7D3BF;
 --theme-tertiary: #C1BAA1;
 --theme-quaternary: #A59D84; */
+
+/* --color-primary: rgb(31, 41, 55);
+--color-secondary: rgb(243, 244, 246);
+--color-tertiary: rgb(74, 222, 128); */

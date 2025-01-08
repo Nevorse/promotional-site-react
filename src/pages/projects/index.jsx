@@ -56,13 +56,13 @@ export default function Projects() {
           initial="hidden"
           animate="visible"
           variants={containerAnimation}
-          className="flex flex-wrap justify-center gap-x-8 gap-y-9 my-12"
+          className="flex flex-wrap justify-center gap-x-6 gap-y-20 my-40"
         >
           {projects?.map((doc) => (
             <motion.div variants={itemAnimation} key={doc.id}>
-              <Link to={`${doc?.id}`}>
-                <CardComp doc={doc} type={2} />
-              </Link>
+              {/* <Link to={`${doc?.id}`}> */}
+                <CardComp doc={doc} type={2} folder={true} />
+              {/* </Link> */}
             </motion.div>
           ))}
         </motion.div>

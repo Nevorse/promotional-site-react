@@ -3,7 +3,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 export default function CardSlider() {
   const navigate = useNavigate();
@@ -16,7 +15,7 @@ export default function CardSlider() {
     swipeToSlide: true,
     speed: 500,
     autoplaySpeed: 5000,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
     responsive: [
       {
@@ -38,7 +37,7 @@ export default function CardSlider() {
         },
       },
     ],
-    className: "w-[90%] mx-auto",
+    className: "w-[92%] mx-auto",
   };
 
   let int;
@@ -49,7 +48,7 @@ export default function CardSlider() {
     <Slider {...settings}>
       {services?.map((doc) => (
         <div key={doc?.id} className="group">
-          <div className="flex flex-col items-center justify-center p-6">
+          <div className="flex flex-col items-center justify-center p-8">
             <div
               onMouseDown={(e) => {
                 startX = e.screenX;
@@ -66,9 +65,11 @@ export default function CardSlider() {
                   navigate(`/services/${doc?.index + "_" + doc?.title}`);
               }}
               style={{ backgroundImage: `url(${doc?.data[0]})` }}
-              className="w-full h-[220px] bg-center bg-cover bg-transparent mb-4 transition-all hover:shadow-xl"
+              className="w-full lg:h-[280px] h-[220px] bg-center bg-cover bg-transparent mb-4 transition-all hover:shadow-xl cursor-pointer"
             />
-            <h5 className="text-xl font-bold mb-3 max-w-[330px] truncate">{doc?.title}</h5>
+            <h5 
+            onClick={() => navigate(`/services/${doc?.index + "_" + doc?.title}`)}
+            className="text-xl font-bold mb-3 max-w-[330px] truncate cursor-pointer">{doc?.title}</h5>
             {/* <p className="text-[15px] text-center leading-5 max-h-20 text-gray-600 text-ellipsis overflow-hidden">
               {doc?.content}
             </p> */}

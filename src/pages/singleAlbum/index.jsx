@@ -134,7 +134,7 @@ export default function SingleAlbum() {
                 style={{
                   backgroundImage: `url(${document?.data && document.data[0]})`,
                 }}
-                className="2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh] w-full bg-no-repeat bg-cover bg-center rounded-lg transition-all shadow-md cursor-pointer"
+                className="2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh] w-full bg-no-repeat bg-cover bg-center transition-all shadow-md cursor-pointer"
               >
                 <img
                   src={document?.data && document?.data[0]}
@@ -183,9 +183,9 @@ export default function SingleAlbum() {
                 >
                   <div
                     className={classNames(
-                      "px-4 py-3 max-h-12 truncate transition-all bg-neutral-100 text-neutral-800 hover:bg-neutral-800 hover:text-neutral-200",
+                      "px-4 py-3 max-h-12 truncate transition-all bg-neutral-200 text-[color:var(--color-primary)] hover:bg-[color:var(--theme-quaternary)] hover:text-[color:var(--color-secondary)] hover:opacity-90",
                       {
-                        "bg-neutral-800/90 !text-neutral-200":
+                        "!bg-[color:var(--theme-quaternary)] !text-neutral-200":
                           document?.id == doc?.id,
                       }
                     )}
@@ -207,11 +207,11 @@ export default function SingleAlbum() {
                   <div
                     key={index}
                     onClick={() => openModalHandler(e, index)}
-                    className="cursor-pointer max-w-[500px] max-h-[350px] hover:scale-105 transition-transform"
+                    className="cursor-pointer max-w-[500px] max-h-[350px] hover:scale-[1.02] transition-transform"
                   >
                     <img
                       src={e}
-                      className="w-full h-full object-cover object-center rounded-sm shadow-lg hover:shadow-2xl transition-shadow"
+                      className="w-full h-full object-cover object-center shadow-lg hover:shadow-2xl transition-shadow"
                     />
                   </div>
                 );

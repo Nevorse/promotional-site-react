@@ -70,12 +70,12 @@ export default function ContactForm() {
         <Form
           ref={form}
           className="flex items-center justify-center flex-col gap-4 w-[80%]">
-          <div className="flex justify-center flex-wrap w-[90%] gap-5">
+          <div className="flex justify-center flex-wrap w-[92%] gap-5">
             <Input name={"name"} label={"İsim"} as={"input"} />
             <Input name={"phoneNum"} label={"Telefon Numarası"} as={"input"} />
             <Input name={"mail"} label={"E-Posta"} as={"input"} type={"email"} />
           </div>
-          <div className="w-[90%]">
+          <div className="w-[92%]">
             <Input name={"message"} label={"Mesaj"} as={"textarea"} rows={"6"} />
           </div>
 

@@ -76,9 +76,9 @@ export default function Folder() {
         >
           {collData?.map((doc) => (
             <motion.div variants={itemAnimation} key={doc?.id}>
-              <Link to={`${doc?.index + "_" + doc?.title}`}>
-                <CardComp key={doc?.id} doc={doc} type={2} />
-              </Link>
+              {/* <Link to={`${doc?.index + "_" + doc?.title}`}> */}
+                <CardComp key={doc?.id} doc={doc} type={2} folder={false}/>
+              {/* </Link> */}
             </motion.div>
           ))}
         </motion.div>

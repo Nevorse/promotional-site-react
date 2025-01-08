@@ -68,7 +68,7 @@ export default function Modal({ img, index = 0 }) {
           />
         </div>
 
-        <div className="flex text-white gap-x-3 h-5 xl:h-6">
+        <div className="absolute bottom-5 flex text-white gap-x-3 h-5 xl:h-6">
           {modal?.data?.map((e, i) => (
             <button
               key={i}

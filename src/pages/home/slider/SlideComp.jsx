@@ -15,7 +15,7 @@ export default function SlideComp({ index, imgUrl, slideIndex }) {
           "opacity-100": slideIndex === index,
         }
       )}>
-      <div className="bg-black/20 w-full h-full absolute" />
+      <div className="bg-black/35 w-full h-full absolute" />
     </div>
     // <motion.div
     //   initial={{ opacity: 0 }}

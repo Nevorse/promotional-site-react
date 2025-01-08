@@ -56,13 +56,13 @@ export default function Services() {
           initial="hidden"
           animate="visible"
           variants={containerAnimation}
-          className="flex flex-wrap justify-center gap-8 my-12"
+          className="flex flex-wrap justify-center gap-x-6 gap-y-20 my-40"
         >
           {services?.map((doc) => (
             <motion.div variants={itemAnimation} key={doc?.id}>
-              <Link to={`${doc?.index + "_" + doc?.title}`}>
-                <CardComp key={doc?.id} doc={doc} type={2} />
-              </Link>
+              {/* <Link to={`${doc?.index + "_" + doc?.title}`}> */}
+                <CardComp key={doc?.id} doc={doc} type={2} folder={false} />
+              {/* </Link> */}
             </motion.div>
           ))}
         </motion.div>

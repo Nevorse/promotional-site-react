@@ -6,21 +6,21 @@ export default function HomeProjects() {
   const { projects } = useSelector((state) => state.collections);
 
   return (
-    <div className="w-full pt-16 pb-10">
+    <div className="flex flex-col items-center justify-center w-full pt-16 pb-10">
       <div className="flex flex-col items-center">
-        <div className="text-[color:var(--color-primary)] text-center text-3xl font-bold tracking-wider mb-4">
+        <div className="text-[color:var(--color-primary)] text-center text-4xl font-bold tracking-wider mb-4">
           Projelerimiz
         </div>
-        <div className=" w-36 h-px bg-[color:var(--color-primary)] mb-8" />
+        <div className=" w-36 h-px bg-[color:var(--color-primary)] mb-10" />
       </div>
 
-      <div className="flex gap-x-16 gap-y-10 w-full justify-center flex-wrap">
+      <div className="flex w-[92.5%] gap-x-4 gap-y-20 justify-center flex-wrap">
         {projects?.map(
           (doc, index) =>
-            index < 8 && (
-              <Link key={doc.id} to={`/projects/${doc?.id}`}>
-                <CardComp doc={doc} />
-              </Link>
+            index < 6 && (
+              // <Link key={doc.id} to={`/projects/${doc?.id}`}>
+                <CardComp key={doc.id} doc={doc} folder={true} />
+              // </Link>
             )
         )}
       </div>

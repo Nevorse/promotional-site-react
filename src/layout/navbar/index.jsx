@@ -17,12 +17,14 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
     }
   }, [innerWidth]);
 
+  // bg-[color:var(--theme-tertiary)]
+
   return (
     <header
       className={
         fixedNav
           ? classNames(
-              "fixed bg-[color:var(--theme-tertiary)] shadow-md top-0 left-0 right-0 z-20 max-h-0 p-0 transition-all overflow-hidden",
+              "fixed shadow-md top-0 left-0 right-0 z-20 max-h-0 p-0 transition-all overflow-hidden bg-black/50 backdrop-blur-md",
               {
                 "!max-h-[96px]": !hidden,
                 "!max-h-0 !shadow-none": !display,
@@ -31,10 +33,14 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
           : undefined
       }
     >
-      <div className="w-[90%] mx-auto flex items-center justify-between">
-        <div className="h-24 w-24 shrink-0 p-[4px]">
+      <div className="w-[92%] max-w-[1500px] mx-auto flex items-center justify-between">
+        <div className={classNames("h-[105px] shrink-0 p-[4px] text-2xl text-center content-center", {
+          "text-[color:var(--color-secondary)]": fixedNav,
+          "text-[color:var(--color-primary)]": !fixedNav
+        })}>
           <Link to={"/"}>
-            <img src={logo} className="object-cover object-center" />
+            {/* <img src={logo} className="object-cover object-center" /> */}
+            ozgurahsap
           </Link>
         </div>
 
@@ -100,8 +106,8 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
                 to={item.link}
                 className={
                   classNames("px-4 py-2 rounded-xl transition-colors", {
-                    "text-[color:var(--color-secondary)] hover:bg-[color:var(--theme-quaternary)]": fixedNav,
-                    "text-[color:var(--color-primary)] hover:bg-[color:var(--theme-secondary)]": !fixedNav
+                    "text-[color:var(--color-secondary)]": fixedNav,
+                    "text-[color:var(--color-primary)]": !fixedNav
                   })
               }
               >

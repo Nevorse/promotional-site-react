@@ -24,7 +24,7 @@ export default function Home() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="max-w-[90%] min-h-[90vh] mx-auto mt-8">
+      className="max-w-[92%] min-h-[90vh] mx-auto">
       <HomeSlider />
       <HomeServices />
       <HomeProjects />

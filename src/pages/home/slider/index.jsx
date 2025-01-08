@@ -39,7 +39,7 @@ export default function HomeSlider() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="2xl:h-[80vh] xl:h-[70vh] lg:h-[60vh] md:h-[55vh] sm:h-[50vh] h-[45vh] w-full relative flex rounded-t-md overflow-hidden"
+      className="2xl:h-[81vh] xl:h-[70vh] lg:h-[60vh] md:h-[55vh] sm:h-[50vh] h-[45vh] w-full relative flex"
     >
       {slideImages?.map((imgUrl, index) => (
         <SlideComp
@@ -49,7 +49,7 @@ export default function HomeSlider() {
           slideIndex={slideIndex}
         />
       ))}
-      <div className="absolute inset-0 top-[40%] w-11/12 mx-auto text-[color:var(--color-secondary)] text-4xl font-semibold transition-all">
+      <div className="absolute inset-0 top-[40%] w-[90%] text-center mx-auto text-[color:var(--color-secondary)] xl:text-5xl md:text-4xl text-2xl font-semibold transition-all">
         {sliderTexts[slideIndex]}
       </div>
 

@@ -11,7 +11,7 @@ export default function FAQ() {
         <div className=" w-36 h-px bg-[color:var(--color-primary)] mb-8" />
       </div>
 
-      <div className="flex flex-col mx-auto w-[90%] max-w-[1200px] gap-3">
+      <div className="flex flex-col mx-auto w-[92%] max-w-[1200px] gap-3">
         {_FAQuestions.map((data, index) => (
           <Accordion data={data} key={index} />
         ))}

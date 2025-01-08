@@ -16,12 +16,12 @@ export default function AboutUs() {
         {_aboutUs?.map((data, index) => (
           <div key={index} className="flex flex-col items-center gap-4">
             <div>
-              <h1 className="text-[40px] font-semibold font-sans text-[color:var(--color-primary)] text-center">
+              <h1 className="text-[40px] font-semibold text-[color:var(--color-primary)] text-center">
                 {data.title}
               </h1>
             </div>
             <div>
-              <p className="text-[18px] font-semibold font-sans text-[color:var(--color-primary)] text-center">
+              <p className="text-[18px] font-semibold text-[color:var(--color-primary)] text-center">
                 {data.content}
               </p>
             </div>
