@@ -18,14 +18,14 @@ export default function CardSlider() {
     slidesToShow: 3,
     slidesToScroll: 1,
     responsive: [
+      // {
+      //   breakpoint: 1465,
+      //   settings: {
+      //     slidesToShow: 3,
+      //   },
+      // },
       {
-        breakpoint: 1465,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 1100,
+        breakpoint: 1280,
         settings: {
           slidesToShow: 2,
         },
@@ -48,7 +48,7 @@ export default function CardSlider() {
     <Slider {...settings}>
       {services?.map((doc) => (
         <div key={doc?.id} className="group">
-          <div className="flex flex-col items-center justify-center p-8">
+          <div className="flex flex-col items-center justify-center p-8  ">
             <div
               onMouseDown={(e) => {
                 startX = e.screenX;
