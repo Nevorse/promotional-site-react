@@ -48,7 +48,7 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
           </Link>
           <Link to={"/"}>
             {/* <img src={logo} className="object-cover object-center" /> */}
-            ozgurahsap
+            Özgür Ahşap
           </Link>
         </div>
 
