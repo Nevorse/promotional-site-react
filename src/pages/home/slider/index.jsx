@@ -50,7 +50,7 @@ export default function HomeSlider() {
         />
       ))}
       <div className="absolute inset-0 top-[40%] w-[90%] mx-auto text-[color:var(--color-secondary)]
-      xl:text-4xl md:text-4xl text-2xl font-semibold transition-all opacity-85">
+      xl:text-4xl md:text-4xl text-2xl font-semibold transition-all opacity-95">
         {sliderTexts[slideIndex]}
       </div>
     </motion.div>
