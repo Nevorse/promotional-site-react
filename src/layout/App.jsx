@@ -25,7 +25,7 @@ function App() {
   return (
     <div className="bg-[color:var(--theme-primary)]">
       <Navbar innerWidth={windowSize[0]}/>
-      {windowSize[0] > 768 && (
+      {windowSize[0] > 948 && (
         <Navbar hidden={hidden} display={display} fixedNav={true}/>
       )}
       <Toaster position="top-right" />

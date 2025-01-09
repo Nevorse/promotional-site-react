@@ -107,7 +107,7 @@ export default function SingleAlbum() {
         block: "center",
         inline: "start",
       });
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      // window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -121,11 +121,46 @@ export default function SingleAlbum() {
         animate={{ opacity: 1, translateY: 0 }}
         className="max-w-[92%] min-h-[90vh] mx-auto lg:my-8 my-6"
       >
-        <div className="flex flex-col xl:flex-row gap-y-8 gap-x-6">
+        {/* <div className="flex items-center mb-8">
+          <div
+            ref={sliderRef}
+            className="flex gap-x-0.5 overflow-x-scroll rounded-sm overscroll-contain
+            scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[color:var(--theme-tertiary)]"
+          >
+            {allDocuments?.map((doc, index) => (
+              <Link
+                onClick={scrollInto}
+                className={classNames({ selected: document?.id == doc?.id })}
+                id={doc?.index}
+                key={index + "-" + doc?.id}
+                to={
+                  folderId
+                    ? `/${coll}/${folderId}/${doc?.index + "_" + doc?.title}`
+                    : `/${coll}/${doc?.index + "_" + doc?.title}`
+                }
+              >
+                <div
+                  className={classNames(
+                    "px-4 py-3 h-12 w-52 truncate transition-all bg-neutral-200 text-[color:var(--color-primary)] hover:bg-[color:var(--theme-quaternary)] hover:text-[color:var(--color-secondary)] hover:opacity-90",
+                    {
+                      "!bg-[color:var(--theme-quaternary)] !text-neutral-200":
+                        document?.id == doc?.id,
+                    }
+                  )}
+                >
+                  {doc?.title}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div> */}
+
+        <div className="text-[28px] mb-8 font-semibold tracking-wider">
+          <h1>{document?.title}</h1>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-y-8 gap-x-6">
           <div className="flex flex-1 flex-col gap-4 xl:w-[80%]">
-            <div className="text-[28px] font-semibold tracking-wider">
-              <h1>{document?.title}</h1>
-            </div>
             <div className="mb-8 transition-all">
               <motion.div
                 onClick={() => openModalHandler(document?.data && document?.data[0])}
@@ -150,22 +185,10 @@ export default function SingleAlbum() {
             </div>
           </div>
 
-          <div className="mb-6 flex-1 mt-[58px] max-w-[320px]">
-            {/* <div className="w-full mb-5">
-              <h1 className="text-xl tracking-wide mb-2">
-                {coll == "services" ? "Hizmetlerimiz" : "Projelerimiz"}
-              </h1>
-              <span className="text-lg tracking-wide">
-                {coll == "services"
-                  ? "Verdiğimiz hizmetlere aşağıdan ulaşabilirsiniz"
-                  : "Projelerimize aşağıdan ulaşabilirsiniz"}
-              </span>
-            </div> */}
-
+          <div className="mb-6 flex-1 lg:max-w-[320px]">
             <div
               ref={sliderRef}
-              // style={{ scrollbarWidth: "none" }}
-              className="w-full flex flex-col gap-y-1 overflow-y-scroll rounded-md
+              className="w-full flex flex-col gap-y-1 overflow-y-scroll rounded-sm
               2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh]
               scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[color:var(--theme-tertiary)]"
             >

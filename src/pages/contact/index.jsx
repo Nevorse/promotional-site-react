@@ -69,25 +69,25 @@ export default function Contact() {
             <>
               <div className="flex flex-col items-center gap-4">
                 <FaPhoneAlt className="w-8 h-8" />
-                <p className="text-2xl font-medium">+90 542 134 5623</p>
+                <p className="text-2xl font-medium font-sans">+90 542 134 5623</p>
               </div>
 
               <a target="_blank" href="https://wa.me/905421345623">
                 <div className="flex flex-col items-center gap-4 hover:text-green-500/90">
                   <FaWhatsapp className="w-8 h-8" />
-                  <p className="text-2xl font-medium">+90 542 134 5623</p>
+                  <p className="text-2xl font-medium font-sans">+90 542 134 5623</p>
                 </div>
               </a>
 
               <div className="flex flex-col items-center gap-4">
                 <IoIosMail className="w-8 h-8" />
-                <p className="text-2xl font-medium">info@ozgurahsap.com</p>
+                <p className="text-2xl font-medium font-sans">info@ozgurahsap.com</p>
               </div>
 
               <a target="_blank" href="https://instagram.com/ozkartalmarangoz">
                 <div className="flex flex-col items-center gap-4 hover:text-green-500/90">
                   <IoLogoInstagram className="w-8 h-8" />
-                  <p className="text-2xl font-medium">/ozgurahsapdekorasyon</p>
+                  <p className="text-2xl font-medium font-sans">/ozgurahsapdekorasyon</p>
                 </div>
               </a>
             </>
@@ -97,7 +97,7 @@ export default function Contact() {
               <a target="_blank" href="tel:+905421345623">
                 <div className="flex flex-col items-center gap-4 hover:text-green-500/90">
                   <FaPhoneAlt className="w-8 h-8" />
-                  <p className="text-2xl font-medium underline underline-offset-[6px]">
+                  <p className="text-2xl font-medium underline underline-offset-[6px] font-sans">
                     +90 542 134 5623
                   </p>
                 </div>
@@ -105,7 +105,7 @@ export default function Contact() {
               <a target="_blank" href="https://wa.me/905421345623">
                 <div className="flex flex-col items-center gap-4 hover:text-green-500/90">
                   <FaWhatsapp className="w-8 h-8" />
-                  <p className="text-2xl font-medium underline underline-offset-[6px]">
+                  <p className="text-2xl font-medium underline underline-offset-[6px] font-sans">
                     +90 542 134 5623
                   </p>
                 </div>
@@ -113,13 +113,13 @@ export default function Contact() {
 
               <div className="flex flex-col items-center gap-4">
                 <IoIosMail className="w-8 h-8" />
-                <p className="text-2xl font-medium">info@ozgurahsap.com</p>
+                <p className="text-2xl font-medium font-sans">info@ozgurahsap.com</p>
               </div>
 
               <a target="_blank" href="https://instagram.com/ozkartalmarangoz">
                 <div className="flex flex-col items-center gap-4 hover:text-green-500/90">
                   <IoLogoInstagram className="w-8 h-8" />
-                  <p className="text-2xl font-medium underline underline-offset-[6px]">/ozgurahsapdekorasyon</p>
+                  <p className="text-2xl font-medium underline underline-offset-[6px] font-sans">/ozgurahsapdekorasyon</p>
                 </div>
               </a>
             </>

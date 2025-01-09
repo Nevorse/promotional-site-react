@@ -12,7 +12,7 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
   const outsiteRef = useRef();
 
   useEffect(() => {
-    if (innerWidth > 768 && openNavbar) {
+    if (innerWidth > 948 && openNavbar) {
       setOpenNavbar(false);
     }
   }, [innerWidth]);
@@ -26,7 +26,7 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
           ? classNames(
               "fixed shadow-md top-0 left-0 right-0 z-20 max-h-0 p-0 transition-all overflow-hidden bg-black/50 backdrop-blur-md",
               {
-                "!max-h-[96px]": !hidden,
+                "!max-h-[105px]": !hidden,
                 "!max-h-0 !shadow-none": !display,
               }
             )
@@ -34,17 +34,25 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
       }
     >
       <div className="w-[92%] max-w-[1500px] mx-auto flex items-center justify-between">
-        <div className={classNames("h-[105px] shrink-0 p-[4px] text-2xl text-center content-center", {
-          "text-[color:var(--color-secondary)]": fixedNav,
-          "text-[color:var(--color-primary)]": !fixedNav
-        })}>
+        <div
+          className={classNames(
+            "flex items-center justify-center gap-7 h-[105px] shrink-0 p-[4px] text-2xl text-center content-center",
+            {
+              "text-[color:var(--color-secondary)]": fixedNav,
+              "text-[color:var(--color-primary)]": !fixedNav,
+            }
+          )}
+        >
+          <Link to={"/"}>
+            <img src={logo} className="object-cover object-center h-[90px] lg" />
+          </Link>
           <Link to={"/"}>
             {/* <img src={logo} className="object-cover object-center" /> */}
             ozgurahsap
           </Link>
         </div>
 
-        {innerWidth <= 768 ? (
+        {innerWidth <= 948 ? (
           <div>
             <button
               onClick={() => setOpenNavbar((p) => !p)}
@@ -104,12 +112,10 @@ export default function Navbar({ hidden, display, fixedNav = false, innerWidth }
               <Link
                 key={index}
                 to={item.link}
-                className={
-                  classNames("px-4 py-2 rounded-xl transition-colors", {
-                    "text-[color:var(--color-secondary)]": fixedNav,
-                    "text-[color:var(--color-primary)]": !fixedNav
-                  })
-              }
+                className={classNames("px-4 py-2 rounded-xl transition-colors", {
+                  "text-[color:var(--color-secondary)]": fixedNav,
+                  "text-[color:var(--color-primary)]": !fixedNav,
+                })}
               >
                 {item.title}
               </Link>

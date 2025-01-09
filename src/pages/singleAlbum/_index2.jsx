@@ -107,7 +107,7 @@ export default function SingleAlbum() {
           className="overscroll-contain mb-6 rounded-sm overflow-hidden"
         >
           <div className="flex items-center overflow-hidden">
-            <motion.div className="flex gap-x-0.5">
+            <div className="flex gap-x-0.5">
               {allDocuments?.map((doc) => (
                 <Link
                   className="w-48"
@@ -131,7 +131,7 @@ export default function SingleAlbum() {
                   </div>
                 </Link>
               ))}
-            </motion.div>
+            </div>
           </div>
         </section>
 

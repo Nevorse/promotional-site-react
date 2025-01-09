@@ -6,7 +6,7 @@ export default function HomeProjects() {
   const { projects } = useSelector((state) => state.collections);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full pt-16 pb-10">
+    <div className="flex flex-col items-center justify-center w-full mt-40 pb-10">
       <div className="flex flex-col items-center">
         <div className="text-[color:var(--color-primary)] text-center text-4xl font-bold tracking-wider mb-4">
           Projelerimiz

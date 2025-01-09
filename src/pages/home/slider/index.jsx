@@ -49,22 +49,10 @@ export default function HomeSlider() {
           slideIndex={slideIndex}
         />
       ))}
-      <div className="absolute inset-0 top-[40%] w-[90%] text-center mx-auto text-[color:var(--color-secondary)] xl:text-5xl md:text-4xl text-2xl font-semibold transition-all">
+      <div className="absolute inset-0 top-[40%] w-[90%] mx-auto text-[color:var(--color-secondary)]
+      xl:text-4xl md:text-4xl text-2xl font-semibold transition-all opacity-85">
         {sliderTexts[slideIndex]}
       </div>
-
-      {/* <div>
-        <div
-          style={{
-            backgroundImage: `url(${""})`,
-          }}
-          className="w-full h-full bg-center bg-cover transition-all duration-500">
-          <div className="bg-black/30 absolute w-full h-full" />
-        </div>
-        <div className="absolute inset-0 top-[40%] w-11/12 mx-auto text-[color:var(--color-secondary)] text-4xl font-semibold transition-all">
-          {sliderTexts[slideIndex]}
-        </div>
-      </div> */}
     </motion.div>
   );
 }

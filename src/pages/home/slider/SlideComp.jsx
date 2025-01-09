@@ -17,15 +17,5 @@ export default function SlideComp({ index, imgUrl, slideIndex }) {
       )}>
       <div className="bg-black/35 w-full h-full absolute" />
     </div>
-    // <motion.div
-    //   initial={{ opacity: 0 }}
-    //   animate={{ opacity: 1 }}
-    //   exit={{ opacity: 0 }}
-    //   className="w-full h-full object-center object-cover absolute">
-    //   <img
-    //     src={doc?.data}
-    //     className="w-full h-full object-cover object-center"
-    //   />
-    // </motion.div>
   );
 }
