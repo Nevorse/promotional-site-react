@@ -8,6 +8,7 @@ import Modal from "../../components/Modal";
 import { setModal } from "../../store/modal";
 import store from "../../store";
 import toast from "react-hot-toast";
+import useWindowSize from "../../hooks/useWindowSize";
 
 export default function SingleAlbum() {
   const { services, projectFolders } = useSelector((state) => state.collections);
@@ -37,6 +38,7 @@ export default function SingleAlbum() {
   const [modalImageIndex, setModalImageIndex] = useState();
   const textBoxRef = useRef();
   const sliderRef = useRef();
+  const windowSize = useWindowSize();
 
   useEffect(() => {
     // window.scrollTo({ top: 0, behavior: "smooth" });
@@ -93,21 +95,24 @@ export default function SingleAlbum() {
     store.dispatch(setModal({ coll: coll, data: document?.data }));
   };
   const scrollInto = (e) => {
-    let index;
-    let id = e?.target.parentElement.id || docIndex;
-    allDocuments.find((o, i) => {
-      if (o.index == id) {
-        index = i;
-        return o;
-      }
-    });
-    if (sliderRef?.current?.children[index]) {
-      sliderRef?.current?.children[index]?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "start",
+    if (windowSize[0] < 1024) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      let index;
+      let id = e?.target.parentElement.id || docIndex;
+      allDocuments.find((o, i) => {
+        if (o.index == id) {
+          index = i;
+          return o;
+        }
       });
-      // window.scrollTo({ top: 0, behavior: "smooth" });
+      if (sliderRef?.current?.children[index]) {
+        sliderRef?.current?.children[index]?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "start",
+        });
+      }
     }
   };
 
@@ -179,7 +184,10 @@ export default function SingleAlbum() {
             </div>
 
             <div className="text-[18px]">
-              <p ref={textBoxRef} className="whitespace-pre-wrap text">
+              <p
+                ref={textBoxRef}
+                className="whitespace-pre-wrap overflow-hidden text"
+              >
                 {/* {document?.content} */}
               </p>
             </div>
@@ -189,7 +197,7 @@ export default function SingleAlbum() {
             <div
               ref={sliderRef}
               className="w-full flex flex-col gap-y-1 overflow-y-scroll rounded-sm
-              2xl:h-[75vh] xl:h-[60vh] lg:h-[65vh] md:h-[55vh] sm:h-[45vh] h-[40vh]
+              2xl:max-h-[75vh] xl:max-h-[60vh] lg:max-h-[65vh] md:max-h-[55vh] sm:max-h-[45vh] max-h-[40vh]
               scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[color:var(--theme-tertiary)]"
             >
               {allDocuments?.map((doc, index) => (
